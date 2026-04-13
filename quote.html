@@ -77,6 +77,12 @@ button.active {
   margin-top:5px;
 }
 
+#detail {
+  margin-top:10px;
+  font-size:13px;
+  color:#aaa;
+}
+
 .save-btn {
   width:100%;
   background:#7b61ff;
@@ -129,6 +135,7 @@ button.active {
 <div class="result-card">
   <p class="result-title">총 견적 금액</p>
   <div class="total" id="total">₩100,000</div>
+  <div id="detail"></div>
 </div>
 
 <button onclick="saveImage()" class="save-btn">
@@ -142,7 +149,6 @@ button.active {
 </div>
 
 <script>
-let base = 100000;
 let options = {};
 
 function toggleOption(name, price, el){
@@ -157,37 +163,74 @@ function toggleOption(name, price, el){
 }
 
 function update(){
-  let people = document.getElementById("people").value || 0;
-  let music = document.getElementById("music").value || 0;
-  let time = document.getElementById("time").value || 0;
-  let edit = document.getElementById("edit").value || 0;
+  let people = parseInt(document.getElementById("people").value) || 0;
+  let music = parseFloat(document.getElementById("music").value) || 0;
+  let time = parseInt(document.getElementById("time").value) || 0;
+  let edit = parseInt(document.getElementById("edit").value) || 0;
 
-  let total = base;
+  let total = 0;
+  let detail = [];
 
-  total += people * 20000;
-
-  if(music > 2){
-    total += (music - 2) * 20000;
+  // 👥 인원
+  if(people > 0){
+    if(people > 5){
+      let cost = people * 50000;
+      total += cost;
+      detail.push(`촬영 인원 (${people}명 × 50,000) = ₩${cost.toLocaleString()}`);
+    } else {
+      let cost = people * 20000;
+      total += cost;
+      detail.push(`촬영 인원 (${people}명 × 20,000) = ₩${cost.toLocaleString()}`);
+    }
   }
 
-  total += time * 30000;
+  // 🎵 음원
+  if(music > 1){
+    let extra = Math.ceil((music - 1) / 0.5);
+    let cost = extra * 100000;
+    total += cost;
+    detail.push(`음원 추가 (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
+  }
 
+  // ⏱️ 시간
+  if(time > 0){
+    let cost = time * 50000;
+    total += cost;
+    detail.push(`촬영 시간 (${time}시간 × 50,000) = ₩${cost.toLocaleString()}`);
+  }
+
+  // 🔁 수정
   if(edit > 1){
-    total += (edit - 1) * 20000;
+    let cost = (edit - 1) * 30000;
+    total += cost;
+    detail.push(`수정 추가 (${edit - 1}회 × 30,000) = ₩${cost.toLocaleString()}`);
   }
 
+  // ⚙️ 옵션
   for(let key in options){
     total += options[key];
   }
 
+  // 💰 최소 금액
+  if(total < 100000){
+    total = 100000;
+    detail.push(`최소 금액 적용 = ₩100,000`);
+  }
+
+  // 출력
   document.getElementById("total").innerText =
     "₩" + total.toLocaleString();
+
+  document.getElementById("detail").innerHTML =
+    detail.map(d => `<p>${d}</p>`).join("");
 }
 
+// 입력 자동 반영
 document.querySelectorAll("input").forEach(i=>{
   i.addEventListener("input", update);
 });
 
+// 이미지 저장
 function saveImage(){
   html2canvas(document.body).then(canvas=>{
     let link = document.createElement("a");
