@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>촬영 견적 계산</title>
+
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 body {
   background:#0d0d0f;
   color:white;
-  font-family: 'Arial', sans-serif;
+  font-family:sans-serif;
   padding:20px;
 }
 
@@ -76,6 +77,17 @@ button.active {
   margin-top:5px;
 }
 
+.save-btn {
+  width:100%;
+  background:#7b61ff;
+  color:white;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  margin-top:15px;
+  font-size:16px;
+}
+
 .kakao-btn {
   display:block;
   text-align:center;
@@ -91,14 +103,17 @@ button.active {
 </head>
 
 <body>
+
 <div class="container">
 
 <h2>촬영 견적 계산</h2>
 
 <div class="section">
   <p>촬영 정보</p>
+
+  <input type="number" id="people" placeholder="촬영 인원 (명)">
+  <input type="number" id="music" placeholder="음원 총 길이 (분)">
   <input type="number" id="time" placeholder="촬영 시간 (시간)">
-  <input type="number" id="distance" placeholder="이동 거리 (km)">
   <input type="number" id="edit" placeholder="수정 횟수">
 </div>
 
@@ -116,11 +131,72 @@ button.active {
   <div class="total" id="total">₩100,000</div>
 </div>
 
+<button onclick="saveImage()" class="save-btn">
+  견적 이미지 저장
+</button>
+
 <a class="kakao-btn" href="https://open.kakao.com/o/너링크" target="_blank">
   카톡으로 문의하기
 </a>
 
 </div>
+
+<script>
+let base = 100000;
+let options = {};
+
+function toggleOption(name, price, el){
+  if(options[name]){
+    delete options[name];
+    el.classList.remove("active");
+  } else {
+    options[name] = price;
+    el.classList.add("active");
+  }
+  update();
+}
+
+function update(){
+  let people = document.getElementById("people").value || 0;
+  let music = document.getElementById("music").value || 0;
+  let time = document.getElementById("time").value || 0;
+  let edit = document.getElementById("edit").value || 0;
+
+  let total = base;
+
+  total += people * 20000;
+
+  if(music > 2){
+    total += (music - 2) * 20000;
+  }
+
+  total += time * 30000;
+
+  if(edit > 1){
+    total += (edit - 1) * 20000;
+  }
+
+  for(let key in options){
+    total += options[key];
+  }
+
+  document.getElementById("total").innerText =
+    "₩" + total.toLocaleString();
+}
+
+document.querySelectorAll("input").forEach(i=>{
+  i.addEventListener("input", update);
+});
+
+function saveImage(){
+  html2canvas(document.body).then(canvas=>{
+    let link = document.createElement("a");
+    link.download = "quote.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
 
 </body>
 </html>
