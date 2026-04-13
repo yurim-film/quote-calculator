@@ -9,24 +9,46 @@
 body {
   background:#0d0d0f;
   color:white;
-  font-family:sans-serif;
+  font-family: 'Arial', sans-serif;
   padding:20px;
+}
+
+.container {
+  max-width:420px;
+  margin:auto;
+}
+
+h2 {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.section {
+  margin-top:20px;
 }
 
 input {
   width:100%;
-  padding:18px;
-  margin:10px 0;
+  padding:16px;
+  margin-top:10px;
   border:none;
-  border-radius:12px;
-  font-size:16px;
+  border-radius:10px;
+  font-size:15px;
+  background:#1a1a1d;
+  color:white;
+}
+
+.options {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
 }
 
 button {
-  padding:12px;
-  margin:5px;
+  padding:10px 14px;
   border:none;
-  border-radius:10px;
+  border-radius:20px;
   background:#2a2a2e;
   color:white;
   cursor:pointer;
@@ -34,6 +56,24 @@ button {
 
 button.active {
   background:#7b61ff;
+}
+
+.result-card {
+  background:#1a1a1d;
+  padding:20px;
+  border-radius:16px;
+  margin-top:30px;
+}
+
+.result-title {
+  font-size:14px;
+  color:#aaa;
+}
+
+.total {
+  font-size:32px;
+  color:#7b61ff;
+  margin-top:5px;
 }
 
 .kakao-btn {
@@ -46,18 +86,6 @@ button.active {
   margin-top:20px;
   text-decoration:none;
   font-weight:bold;
-}
-  
-.card {
-  background:#1a1a1d;
-  padding:20px;
-  border-radius:16px;
-  margin-top:20px;
-}
-
-.total {
-  font-size:28px;
-  color:#7b61ff;
 }
 </style>
 </head>
