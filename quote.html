@@ -91,72 +91,36 @@ button.active {
 </head>
 
 <body>
+<div class="container">
 
 <h2>촬영 견적 계산</h2>
 
-<input type="number" id="time" placeholder="촬영 시간 (시간)">
-<input type="number" id="distance" placeholder="이동 거리 (km)">
-<input type="number" id="edit" placeholder="수정 횟수">
-
-<div>
-  <button onclick="toggleOption('color',80000,this)">색보정</button>
-  <button onclick="toggleOption('fast',100000,this)">빠른 납기</button>
-  <button onclick="toggleOption('outdoor',70000,this)">야외 촬영</button>
+<div class="section">
+  <p>촬영 정보</p>
+  <input type="number" id="time" placeholder="촬영 시간 (시간)">
+  <input type="number" id="distance" placeholder="이동 거리 (km)">
+  <input type="number" id="edit" placeholder="수정 횟수">
 </div>
 
-<div class="card">
-  <p>총 금액</p>
-  <h1 class="total" id="total">₩100,000</h1>
+<div class="section">
+  <p>옵션 선택</p>
+  <div class="options">
+    <button onclick="toggleOption('color',80000,this)">색보정</button>
+    <button onclick="toggleOption('fast',100000,this)">빠른 납기</button>
+    <button onclick="toggleOption('outdoor',70000,this)">야외 촬영</button>
+  </div>
 </div>
 
-<button onclick="saveImage()">견적 이미지 저장</button>
+<div class="result-card">
+  <p class="result-title">총 견적 금액</p>
+  <div class="total" id="total">₩100,000</div>
+</div>
 
-<script>
-let base = 100000;
-let options = {};
+<a class="kakao-btn" href="https://open.kakao.com/o/너링크" target="_blank">
+  카톡으로 문의하기
+</a>
 
-function toggleOption(name, price, el){
-  if(options[name]){
-    delete options[name];
-    el.classList.remove("active");
-  } else {
-    options[name] = price;
-    el.classList.add("active");
-  }
-  update();
-}
-
-function update(){
-  let time = document.getElementById("time").value || 0;
-  let distance = document.getElementById("distance").value || 0;
-  let edit = document.getElementById("edit").value || 0;
-
-  let total = base;
-  total += time * 30000;
-  total += distance * 2000;
-  total += edit * 20000;
-
-  for(let key in options){
-    total += options[key];
-  }
-
-  document.getElementById("total").innerText =
-    "₩" + total.toLocaleString();
-}
-
-document.querySelectorAll("input").forEach(i=>{
-  i.addEventListener("input", update);
-});
-
-function saveImage(){
-  html2canvas(document.body).then(canvas=>{
-    let link = document.createElement("a");
-    link.download = "quote.png";
-    link.href = canvas.toDataURL();
-    link.click();
-  });
-}
-</script>
+</div>
 
 </body>
 </html>
