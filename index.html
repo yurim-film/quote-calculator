@@ -8,8 +8,9 @@
 body{
   margin:0;
   font-family:sans-serif;
-  background:#0d0d0f;
+  background:#050507;
   color:white;
+  overflow-x:hidden;
 }
 
 /* HERO */
@@ -20,16 +21,28 @@ body{
   justify-content:center;
   align-items:center;
   text-align:center;
-  gap:8px;
+  position:relative;
 }
 
 .hero h1{
-  font-size:36px;
+  font-size:52px;
+  font-weight:900;
+  letter-spacing:3px;
 }
 
 .hero p{
-  color:#aaa;
   margin-top:10px;
+  color:#aaa;
+  font-size:14px;
+}
+
+/* 네온 효과 */
+.neon{
+  color:#7b61ff;
+  text-shadow:
+    0 0 5px #7b61ff,
+    0 0 10px #7b61ff,
+    0 0 20px #7b61ff;
 }
 
 /* 버튼 */
@@ -43,79 +56,67 @@ body{
   max-width:260px;
   padding:0 20px;
 
+  margin-top:15px;
+
   border-radius:30px;
   text-decoration:none;
   font-weight:bold;
 
-  transition:all 0.15s ease;
-  box-shadow:0 6px 15px rgba(0,0,0,0.3);
+  transition:0.2s;
 }
 
+/* 메인 버튼 (네온) */
 .btn-main{
   background:#7b61ff;
   color:white;
+  box-shadow:0 0 20px rgba(123,97,255,0.6);
 }
 
+/* 카톡 */
 .btn-kakao{
   background:#fee500;
   color:#000;
 }
 
+/* 인스타 */
 .btn-insta{
-  background: linear-gradient(
-    45deg,
-    #feda75,
-    #fa7e1e,
-    #d62976,
-    #962fbf,
-    #4f5bd5
-  );
-  color:white;
+  border:1px solid #333;
+  color:#ccc;
 }
 
+/* 인터랙션 */
 .btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.4);
+  transform:translateY(-3px);
 }
 
 .btn:active{
-  transform:scale(0.95);
-  box-shadow:0 3px 8px rgba(0,0,0,0.3);
+  transform:scale(0.94);
 }
 
 /* SECTION */
 .section{
   max-width:420px;
-  margin:80px auto;
+  margin:100px auto;
   padding:0 20px;
 }
 
+/* 카드 */
 .card{
-  background:#1a1a1d;
+  border:1px solid #222;
   padding:20px;
-  border-radius:12px;
   margin-top:15px;
+  border-radius:10px;
+  background:#0d0d12;
 }
 
-/* 인스타 카드 */
+/* 포트폴리오 */
 .insta-card{
   margin-top:20px;
   padding:25px;
   border-radius:20px;
-  background: linear-gradient(
-    135deg,
-    #feda75,
-    #fa7e1e,
-    #d62976,
-    #962fbf,
-    #4f5bd5
-  );
-}
 
-.insta-text{
-  background:rgba(0,0,0,0.6);
-  padding:20px;
-  border-radius:15px;
+  border:1px solid #7b61ff;
+  box-shadow:0 0 30px rgba(123,97,255,0.3);
 }
 
 .insta-btn{
@@ -123,10 +124,12 @@ body{
   margin-top:15px;
   padding:12px 18px;
   border-radius:20px;
-  background:white;
-  color:black;
-  font-weight:bold;
+
+  background:#7b61ff;
+  color:white;
   text-decoration:none;
+
+  box-shadow:0 0 15px rgba(123,97,255,0.6);
 }
 
 /* 플로팅 카톡 */
@@ -134,10 +137,13 @@ body{
   position:fixed;
   bottom:20px;
   right:20px;
+
   padding:14px 18px;
+  border-radius:30px;
+
   background:#fee500;
   color:#000;
-  border-radius:30px;
+
   font-weight:bold;
   text-decoration:none;
 
@@ -156,13 +162,15 @@ body{
   position:fixed;
   bottom:90px;
   right:20px;
+
   width:50px;
   height:50px;
+
   border:none;
   border-radius:50%;
-  background:#2a2a2e;
+
+  background:#111;
   color:white;
-  cursor:pointer;
 
   opacity:0;
   transform:translateY(20px);
@@ -176,9 +184,9 @@ body{
 
 .footer{
   text-align:center;
-  margin:60px 0;
+  margin:80px 0;
   font-size:12px;
-  color:#666;
+  color:#555;
 }
 </style>
 </head>
@@ -187,8 +195,8 @@ body{
 
 <!-- HERO -->
 <div class="hero">
-  <h1>YOUR FILM</h1>
-  <p>춤을 가장 멋있게 남기는 방법</p>
+  <h1 class="neon">YOUR FILM</h1>
+  <p>MOVE. SHOOT. CREATE.</p>
 
   <a href="quote.html" class="btn btn-main">견적 계산하기</a>
   <a href="https://open.kakao.com/o/너링크" class="btn btn-kakao">카톡 문의</a>
@@ -197,26 +205,23 @@ body{
 
 <!-- ABOUT -->
 <div class="section">
-  <h2>WHY YOUR FILM</h2>
+  <h2 class="neon">WHY YOUR FILM</h2>
 
-  <div class="card">🎬 댄스 촬영 특화</div>
-  <div class="card">⚡ 빠른 작업</div>
-  <div class="card">🔥 퍼포먼스 중심</div>
+  <div class="card">댄스 퍼포먼스 전문 촬영</div>
+  <div class="card">빠른 작업 & 감각적인 연출</div>
+  <div class="card">움직임을 가장 멋있게 기록</div>
 </div>
 
 <!-- PORTFOLIO -->
 <div class="section">
-  <h2>PORTFOLIO</h2>
+  <h2 class="neon">PORTFOLIO</h2>
 
   <div class="insta-card">
-    <div class="insta-text">
-      <h3>YOUR FILM</h3>
-      <p>실제 작업은 인스타그램에서 확인 가능합니다</p>
+    <p>작업은 인스타그램에서 확인하세요</p>
 
-      <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
-        작업 보러가기 →
-      </a>
-    </div>
+    <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
+      작업 보러가기 →
+    </a>
   </div>
 </div>
 
@@ -228,7 +233,7 @@ body{
 <div class="footer">© YOUR FILM</div>
 
 <!-- 플로팅 -->
-<a href="https://open.kakao.com/o/너링크" class="floating-kakao">카톡 문의</a>
+<a href="https://open.kakao.com/o/너링크" class="floating-kakao">카톡</a>
 <button onclick="scrollToTop()" class="top-btn">↑</button>
 
 <script>
