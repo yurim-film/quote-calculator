@@ -136,6 +136,10 @@ button.active {
 <div class="section">
   <p>촬영 정보</p>
 
+  <input type="text" id="client" placeholder="고객 이름">
+  <input type="text" id="phone" placeholder="연락처">
+  <input type="text" id="insta" placeholder="인스타그램 ID">
+
   <input type="number" id="people" placeholder="촬영 인원 (명)">
 
   <div class="flex">
@@ -143,21 +147,24 @@ button.active {
     <input type="number" id="music_sec" placeholder="초">
   </div>
 
-  <input type="number" id="time" placeholder="촬영 시간">
-  <input type="number" id="edit" placeholder="수정 횟수(1회 기본 포함)">
+  <input type="number" id="time" placeholder="촬영 시간 (시간)">
+  <input type="number" id="edit" placeholder="수정 횟수">
 </div>
 
 <div class="section">
   <p>옵션 선택</p>
   <div class="options">
-    <button onclick="toggleOption('color',80000,this)">옵션1</button>
-    <button onclick="toggleOption('fast',100000,this)">옵션2</button>
+    <button onclick="toggleOption('color',80000,this)">색보정</button>
+    <button onclick="toggleOption('fast',100000,this)">빠른 납기</button>
     <button onclick="toggleOption('outdoor',70000,this)">야외 촬영</button>
   </div>
 </div>
 
 <div class="result-card" id="capture">
-  <h3>YOUR FILM</h3>
+  <h3>YU RIM STUDIO</h3>
+
+  <div id="clientInfo" style="font-size:13px; margin-bottom:10px;"></div>
+
   <p class="result-title">촬영 견적서</p>
 
   <div class="total" id="total">₩100,000</div>
@@ -172,7 +179,7 @@ button.active {
   견적 이미지 저장
 </button>
 
-<a class="kakao-btn" href="https://open.kakao.com/o/너링크" target="_blank">
+<a class="kakao-btn" href="#" onclick="goKakao()">
   카톡으로 문의하기
 </a>
 
@@ -193,6 +200,10 @@ function toggleOption(name, price, el){
 }
 
 function update(){
+  let client = document.getElementById("client").value || "";
+  let phone = document.getElementById("phone").value || "";
+  let insta = document.getElementById("insta").value || "";
+
   let people = parseInt(document.getElementById("people").value) || 0;
   let min = parseInt(document.getElementById("music_min").value) || 0;
   let sec = parseInt(document.getElementById("music_sec").value) || 0;
@@ -201,6 +212,13 @@ function update(){
 
   let total = 0;
   let detail = [];
+
+  // 고객 정보 표시
+  let infoText = "";
+  if(client) infoText += `고객: ${client}<br>`;
+  if(phone) infoText += `연락처: ${phone}<br>`;
+  if(insta) infoText += `인스타: ${insta}`;
+  document.getElementById("clientInfo").innerHTML = infoText;
 
   // 인원
   if(people > 0){
@@ -211,19 +229,17 @@ function update(){
 
   // 음원
   let totalSec = (min * 60) + sec;
-
   if(totalSec > 0){
-    detail.push(`음원 길이 :  ${min}분 ${sec}초`);
+    detail.push(`음원 길이: ${min}분 ${sec}초`);
   }
-
   if(totalSec > 60){
     let extra = Math.ceil((totalSec - 60) / 30);
     let cost = extra * 100000;
     total += cost;
-    detail.push(`음원 길이 추가 (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
+    detail.push(`음원 추가 (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
   }
 
-  // 촬영 시간
+  // 시간
   if(time > 0){
     let cost = time * 50000;
     total += cost;
@@ -234,24 +250,22 @@ function update(){
   if(edit > 1){
     let cost = (edit - 1) * 30000;
     total += cost;
-    detail.push(`1회 제외한 추가 수정 횟수 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
+    detail.push(`수정 추가 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
   }
 
   // 옵션
-  if(Object.keys(options).length > 0){
-    for(let key in options){
-      total += options[key];
+  for(let key in options){
+    total += options[key];
 
-      let name = "";
-      if(key === "color") name = "옵션1";
-      if(key === "fast") name = "옵션2";
-      if(key === "outdoor") name = "야외 촬영";
+    let name = "";
+    if(key === "color") name = "색보정";
+    if(key === "fast") name = "빠른 납기";
+    if(key === "outdoor") name = "야외 촬영";
 
-      detail.push(`옵션 - ${name} = ₩${options[key].toLocaleString()}`);
-    }
+    detail.push(`옵션 - ${name} = ₩${options[key].toLocaleString()}`);
   }
 
-  // 최소 금액
+  // 최소금액
   if(total < 100000){
     total = 100000;
     detail.push(`최소 금액 적용 = ₩100,000`);
@@ -287,6 +301,17 @@ function saveImage(){
     link.href = canvas.toDataURL();
     link.click();
   });
+}
+
+// 카톡 연결 + 자동 복사
+function goKakao(){
+  let text = document.getElementById("capture").innerText;
+
+  navigator.clipboard.writeText(text);
+
+  alert("견적이 복사되었습니다!\n카톡에 붙여넣기 해주세요 😊");
+
+  window.open("https://open.kakao.com/o/너링크");
 }
 </script>
 
