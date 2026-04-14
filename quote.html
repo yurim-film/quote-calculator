@@ -65,7 +65,9 @@ button.active {
 }
 
 .result-card {
-  background:#1a1a1d;
+  background:#111;
+  border:1px solid #333;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
   padding:20px;
   border-radius:16px;
   margin-top:30px;
@@ -142,10 +144,16 @@ button.active {
   </div>
 </div>
 
-<div class="result-card">
-  <p class="result-title">총 견적 금액</p>
+<div class="result-card" id="capture">
+  <h3>YU RIM STUDIO</h3>
+  <p class="result-title">촬영 견적서</p>
+
   <div class="total" id="total">₩100,000</div>
   <div id="detail"></div>
+
+  <hr style="margin:15px 0; border:0.5px solid #333;">
+
+  <p id="date" style="font-size:12px; color:#888;"></p>
 </div>
 
 <button onclick="saveImage()" class="save-btn">
@@ -184,19 +192,17 @@ function update(){
 
   // 👥 인원
   if(people > 0){
-    if(people > 5){
-      let cost = people * 50000;
-      total += cost;
-      detail.push(`촬영 인원 (${people}명 × 50,000) = ₩${cost.toLocaleString()}`);
-    } else {
-      let cost = people * 20000;
-      total += cost;
-      detail.push(`촬영 인원 (${people}명 × 20,000) = ₩${cost.toLocaleString()}`);
-    }
+    let cost = (people > 5) ? people * 50000 : people * 20000;
+    total += cost;
+    detail.push(`촬영 인원 (${people}명) = ₩${cost.toLocaleString()}`);
   }
 
-  // 🎵 음원 (분+초 → 초 변환)
+  // 🎵 음원
   let totalSec = (min * 60) + sec;
+
+  if(totalSec > 0){
+    detail.push(`음원 길이: ${min}분 ${sec}초`);
+  }
 
   if(totalSec > 60){
     let extra = Math.ceil((totalSec - 60) / 30);
@@ -205,23 +211,32 @@ function update(){
     detail.push(`음원 추가 (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
   }
 
-  // ⏱️ 촬영 시간
+  // ⏱️ 시간
   if(time > 0){
     let cost = time * 50000;
     total += cost;
-    detail.push(`촬영 시간 (${time}시간 × 50,000) = ₩${cost.toLocaleString()}`);
+    detail.push(`촬영 시간 (${time}시간) = ₩${cost.toLocaleString()}`);
   }
 
   // 🔁 수정
   if(edit > 1){
     let cost = (edit - 1) * 30000;
     total += cost;
-    detail.push(`수정 추가 (${edit - 1}회 × 30,000) = ₩${cost.toLocaleString()}`);
+    detail.push(`수정 추가 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
   }
 
   // ⚙️ 옵션
-  for(let key in options){
-    total += options[key];
+  if(Object.keys(options).length > 0){
+    for(let key in options){
+      total += options[key];
+
+      let name = "";
+      if(key === "color") name = "색보정";
+      if(key === "fast") name = "빠른 납기";
+      if(key === "outdoor") name = "야외 촬영";
+
+      detail.push(`옵션 - ${name} = ₩${options[key].toLocaleString()}`);
+    }
   }
 
   // 💰 최소 금액
@@ -230,22 +245,28 @@ function update(){
     detail.push(`최소 금액 적용 = ₩100,000`);
   }
 
-  // 출력
   document.getElementById("total").innerText =
     "₩" + total.toLocaleString();
 
   document.getElementById("detail").innerHTML =
     detail.map(d => `<p>${d}</p>`).join("");
+
+  // 날짜
+  document.getElementById("date").innerText =
+    new Date().toLocaleDateString();
 }
 
-// 자동 업데이트
 document.querySelectorAll("input").forEach(i=>{
   i.addEventListener("input", update);
 });
 
-// 이미지 저장
 function saveImage(){
-  html2canvas(document.body).then(canvas=>{
+  const target = document.getElementById("capture");
+
+  html2canvas(target, {
+    backgroundColor:"#111",
+    scale:2
+  }).then(canvas=>{
     let link = document.createElement("a");
     link.download = "quote.png";
     link.href = canvas.toDataURL();
