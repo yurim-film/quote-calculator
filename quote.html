@@ -31,19 +31,25 @@ h2 {
 input {
   width:100%;
   padding:16px;
+  box-sizing:border-box;
   margin-top:10px;
   border:none;
   border-radius:10px;
   font-size:15px;
   background:#1a1a1d;
   color:white;
+  line-height:1.4;
 }
 
 .flex {
   display:flex;
   gap:10px;
 }
-
+  
+.flex input {
+  width:50%;
+}
+  
 .options {
   display:flex;
   flex-wrap:wrap;
@@ -112,6 +118,12 @@ button.active {
   text-decoration:none;
   font-weight:bold;
 }
+
+  #capture p {
+  line-height:1.5;
+}
+
+  
 </style>
 </head>
 
@@ -127,8 +139,8 @@ button.active {
   <input type="number" id="people" placeholder="촬영 인원 (5명 미만 2 // 초과시 인당 3)">
 
   <div class="flex">
-    <input type="number" id="music_min" placeholder="분">
-    <input type="number" id="music_sec" placeholder="초 (기본 1분. 초과시 30초당 10)">
+    <input type="number" id="music_min" placeholder="분 (기본 1분)">
+    <input type="number" id="music_sec" placeholder="초 (초과시 30초당 10)">
   </div>
 
   <input type="number" id="time" placeholder="촬영 시간 (시간당 5)">
@@ -264,8 +276,12 @@ function saveImage(){
   const target = document.getElementById("capture");
 
   html2canvas(target, {
-    backgroundColor:"#111",
-    scale:2
+  backgroundColor:"#111",
+  scale:2,
+  useCORS:true,
+  scrollY: -window.scrollY
+})
+  
   }).then(canvas=>{
     let link = document.createElement("a");
     link.download = "quote.png";
