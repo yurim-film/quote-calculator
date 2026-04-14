@@ -232,7 +232,7 @@ function update(){
   if(totalSec > 0){
     let text = `음원 길이: ${min}분 ${sec}초`;
     if(totalSec > 60){
-      text += " (기본 1분 포함)";
+      text += " (기본 1분 포함. 초과시 30초단위 계산)";
     }
     detail.push(text);
   }
