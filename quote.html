@@ -31,25 +31,25 @@ h2 {
 input {
   width:100%;
   padding:16px;
-  box-sizing:border-box;
-  margin-top:10px;
   border:none;
   border-radius:10px;
   font-size:15px;
   background:#1a1a1d;
   color:white;
+  box-sizing:border-box;
   line-height:1.4;
+  margin-top:10px;
 }
 
 .flex {
   display:flex;
   gap:10px;
 }
-  
+
 .flex input {
   width:50%;
 }
-  
+
 .options {
   display:flex;
   flex-wrap:wrap;
@@ -58,7 +58,8 @@ input {
 }
 
 button {
-  padding:10px 14px;
+  width:100%;
+  padding:12px;
   border:none;
   border-radius:20px;
   background:#2a2a2e;
@@ -77,6 +78,7 @@ button.active {
   padding:20px;
   border-radius:16px;
   margin-top:30px;
+  overflow:visible;
 }
 
 .result-title {
@@ -94,6 +96,10 @@ button.active {
   margin-top:10px;
   font-size:13px;
   color:#aaa;
+}
+
+#capture p {
+  line-height:1.5;
 }
 
 .save-btn {
@@ -118,12 +124,6 @@ button.active {
   text-decoration:none;
   font-weight:bold;
 }
-
-  #capture p {
-  line-height:1.5;
-}
-
-  
 </style>
 </head>
 
@@ -136,22 +136,22 @@ button.active {
 <div class="section">
   <p>촬영 정보</p>
 
-  <input type="number" id="people" placeholder="촬영 인원 (5명 미만 2 // 초과시 인당 3)">
+  <input type="number" id="people" placeholder="촬영 인원 (명)">
 
   <div class="flex">
-    <input type="number" id="music_min" placeholder="분 (기본 1분)">
-    <input type="number" id="music_sec" placeholder="초 (초과시 30초당 10)">
+    <input type="number" id="music_min" placeholder="분">
+    <input type="number" id="music_sec" placeholder="초">
   </div>
 
-  <input type="number" id="time" placeholder="촬영 시간 (시간당 5)">
-  <input type="number" id="edit" placeholder="수정 횟수 (무료 1회 포함)">
+  <input type="number" id="time" placeholder="촬영 시간 (시간)">
+  <input type="number" id="edit" placeholder="수정 횟수">
 </div>
 
 <div class="section">
   <p>옵션 선택</p>
   <div class="options">
-    <button onclick="toggleOption('color',80000,this)">옵션1</button>
-    <button onclick="toggleOption('fast',100000,this)">옵션2</button>
+    <button onclick="toggleOption('color',80000,this)">색보정</button>
+    <button onclick="toggleOption('fast',100000,this)">빠른 납기</button>
     <button onclick="toggleOption('outdoor',70000,this)">야외 촬영</button>
   </div>
 </div>
@@ -202,14 +202,14 @@ function update(){
   let total = 0;
   let detail = [];
 
-  // 👥 인원
+  // 인원
   if(people > 0){
-    let cost = (people > 5) ? people * 30000 : people * 20000;
+    let cost = (people > 5) ? people * 50000 : people * 20000;
     total += cost;
     detail.push(`촬영 인원 (${people}명) = ₩${cost.toLocaleString()}`);
   }
 
-  // 🎵 음원
+  // 음원
   let totalSec = (min * 60) + sec;
 
   if(totalSec > 0){
@@ -223,35 +223,35 @@ function update(){
     detail.push(`음원 추가 (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
   }
 
-  // ⏱️ 시간
+  // 촬영 시간
   if(time > 0){
     let cost = time * 50000;
     total += cost;
     detail.push(`촬영 시간 (${time}시간) = ₩${cost.toLocaleString()}`);
   }
 
-  // 🔁 수정
+  // 수정
   if(edit > 1){
-    let cost = (edit - 1) * 35000;
+    let cost = (edit - 1) * 30000;
     total += cost;
-    detail.push(`1회 제외한 추가 수정 횟수 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
+    detail.push(`수정 추가 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
   }
 
-  // ⚙️ 옵션
+  // 옵션
   if(Object.keys(options).length > 0){
     for(let key in options){
       total += options[key];
 
       let name = "";
-      if(key === "color") name = "옵션1";
-      if(key === "fast") name = "옵션2";
+      if(key === "color") name = "색보정";
+      if(key === "fast") name = "빠른 납기";
       if(key === "outdoor") name = "야외 촬영";
 
       detail.push(`옵션 - ${name} = ₩${options[key].toLocaleString()}`);
     }
   }
 
-  // 💰 최소 금액
+  // 최소 금액
   if(total < 100000){
     total = 100000;
     detail.push(`최소 금액 적용 = ₩100,000`);
@@ -263,25 +263,24 @@ function update(){
   document.getElementById("detail").innerHTML =
     detail.map(d => `<p>${d}</p>`).join("");
 
-  // 날짜
   document.getElementById("date").innerText =
     new Date().toLocaleDateString();
 }
 
+// 자동 업데이트
 document.querySelectorAll("input").forEach(i=>{
   i.addEventListener("input", update);
 });
 
+// 이미지 저장
 function saveImage(){
   const target = document.getElementById("capture");
 
   html2canvas(target, {
-  backgroundColor:"#111",
-  scale:2,
-  useCORS:true,
-  scrollY: -window.scrollY
-})
-  
+    backgroundColor:"#111",
+    scale:2,
+    useCORS:true,
+    scrollY:-window.scrollY
   }).then(canvas=>{
     let link = document.createElement("a");
     link.download = "quote.png";
