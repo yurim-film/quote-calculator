@@ -215,7 +215,7 @@ function update(){
 
   // 고객 정보 표시
   let infoText = "";
-  if(client) infoText += `고객: ${client}<br>`;
+  if(client) infoText += `고객 이름: ${client}<br>`;
   if(phone) infoText += `연락처: ${phone}<br>`;
   if(insta) infoText += `인스타: ${insta}`;
   document.getElementById("clientInfo").innerHTML = infoText;
@@ -236,7 +236,7 @@ function update(){
     let extra = Math.ceil((totalSec - 60) / 30);
     let cost = extra * 100000;
     total += cost;
-    detail.push(`음원 추가 (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
+    detail.push(`음원 길이 추가 (기본 1분) (${extra} × 100,000) = ₩${cost.toLocaleString()}`);
   }
 
   // 시간
@@ -250,7 +250,7 @@ function update(){
   if(edit > 1){
     let cost = (edit - 1) * 30000;
     total += cost;
-    detail.push(`수정 추가 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
+    detail.push(`수정 횟수 추가 (기본 1회) (${edit - 1}회) = ₩${cost.toLocaleString()}`);
   }
 
   // 옵션
