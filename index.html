@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 <head>
 <meta charset="UTF-8">
 <title>YOUR FILM</title>
+
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -25,20 +27,43 @@ body{
   position:relative;
 }
 
-/* 타이틀 애니메이션 */
-.hero h1{
-  font-size:52px;
-  font-weight:900;
-  font-family:'Oswald', sans-serif;
-  letter-spacing:4px;
+/* 로고 */
+.logo{
+  font-family:'Bebas Neue', sans-serif;
+  font-size:64px;
+  line-height:0.9;
+  letter-spacing:8px;
 
   opacity:0;
   transform:translateY(30px);
   animation:titleFadeUp 1s ease forwards;
 }
 
+.logo .top{
+  display:block;
+  color:#777;
+}
+
+.logo .bottom{
+  display:block;
+  color:white;
+  position:relative;
+}
+
+/* 밑줄 포인트 */
+.logo .bottom::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:100%;
+  height:2px;
+  background:white;
+}
+
+/* 서브텍스트 */
 .hero p{
-  margin-top:10px;
+  margin-top:15px;
   color:#aaa;
   font-size:14px;
 
@@ -48,28 +73,7 @@ body{
   animation-delay:0.3s;
 }
 
-/* 네온 펄스 */
-.neon{
-  color:#7b61ff;
-  text-shadow:
-    0 0 5px #7b61ff,
-    0 0 10px #7b61ff,
-    0 0 20px #7b61ff;
-  animation:neonPulse 2s infinite;
-}
-
-@keyframes neonPulse{
-  0%{
-    text-shadow:0 0 5px #7b61ff, 0 0 10px #7b61ff;
-  }
-  50%{
-    text-shadow:0 0 20px #7b61ff, 0 0 40px #7b61ff;
-  }
-  100%{
-    text-shadow:0 0 5px #7b61ff, 0 0 10px #7b61ff;
-  }
-}
-
+/* 애니메이션 */
 @keyframes titleFadeUp{
   to{
     opacity:1;
@@ -98,9 +102,8 @@ body{
 }
 
 .btn-main{
-  background:#7b61ff;
-  color:white;
-  box-shadow:0 0 20px rgba(123,97,255,0.6);
+  background:white;
+  color:black;
 }
 
 .btn-kakao{
@@ -121,7 +124,7 @@ body{
   transform:scale(0.94);
 }
 
-/* SECTION (스크롤 애니메이션) */
+/* SECTION */
 .section{
   max-width:420px;
   margin:100px auto;
@@ -152,8 +155,7 @@ body{
   padding:25px;
   border-radius:20px;
 
-  border:1px solid #7b61ff;
-  box-shadow:0 0 30px rgba(123,97,255,0.3);
+  border:1px solid #222;
 }
 
 .insta-btn{
@@ -162,11 +164,9 @@ body{
   padding:12px 18px;
   border-radius:20px;
 
-  background:#7b61ff;
-  color:white;
+  background:white;
+  color:black;
   text-decoration:none;
-
-  box-shadow:0 0 15px rgba(123,97,255,0.6);
 }
 
 /* 플로팅 카톡 */
@@ -219,7 +219,7 @@ body{
   transform:translateY(0);
 }
 
-/* 영상 */
+/* 배경 영상 */
 .bg-video{
   position:absolute;
   top:50%;
@@ -229,10 +229,10 @@ body{
   transform:translate(-50%, -50%);
   object-fit:cover;
   z-index:-2;
-  opacity:0.4;
+  opacity:0.35;
 }
 
-/* 영상 어둡게 */
+/* 어둡게 */
 .hero::after{
   content:"";
   position:absolute;
@@ -255,12 +255,18 @@ body{
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
+
   <video autoplay muted loop playsinline class="bg-video">
     <source src="video.mp4" type="video/mp4">
   </video>
 
-  <h1 class="neon">YOUR FILM</h1>
+  <h1 class="logo">
+    <span class="top">YOUR</span>
+    <span class="bottom">FILM</span>
+  </h1>
+
   <p>MOVE. SHOOT. CREATE.</p>
 
   <a href="quote.html" class="btn btn-main">견적 계산하기</a>
@@ -268,15 +274,17 @@ body{
   <a href="https://instagram.com/너아이디" class="btn btn-insta">포트폴리오 보기</a>
 </div>
 
+<!-- ABOUT -->
 <div class="section">
-  <h2 class="neon">WHY YOUR FILM</h2>
+  <h2>WHY YOUR FILM</h2>
   <div class="card">댄스 퍼포먼스 전문 촬영</div>
   <div class="card">빠른 작업 & 감각적인 연출</div>
   <div class="card">움직임을 가장 멋있게 기록</div>
 </div>
 
+<!-- PORTFOLIO -->
 <div class="section">
-  <h2 class="neon">PORTFOLIO</h2>
+  <h2>PORTFOLIO</h2>
   <div class="insta-card">
     <p>작업은 인스타그램에서 확인하세요</p>
     <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
@@ -285,12 +293,14 @@ body{
   </div>
 </div>
 
+<!-- CTA -->
 <div class="section">
   <a href="quote.html" class="btn btn-main">지금 견적 확인하기</a>
 </div>
 
 <div class="footer">© YOUR FILM</div>
 
+<!-- 플로팅 -->
 <a href="https://open.kakao.com/o/너링크" class="floating-kakao">카톡</a>
 <button onclick="scrollToTop()" class="top-btn">↑</button>
 
