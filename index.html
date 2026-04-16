@@ -2,6 +2,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+
+<!-- 🔥 필수 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>YOUR FILM</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -57,7 +61,7 @@ body{
   letter-spacing:10px;
 }
 
-/* 영상 */
+/* 배경 영상 */
 .bg-video{
   position:absolute;
   top:50%; left:50%;
@@ -68,7 +72,7 @@ body{
   opacity:0.5;
 }
 
-/* 어둡게 */
+/* 어둡기 */
 .hero::after{
   content:"";
   position:absolute;
@@ -126,7 +130,7 @@ body{
   display:flex;
   gap:15px;
   overflow-x:auto;
-  padding-bottom:10px;
+  padding:10px;
   scroll-snap-type:x mandatory;
 }
 .video-slider::-webkit-scrollbar{ display:none; }
@@ -212,6 +216,42 @@ body{
 @keyframes fadeIn{
   to{opacity:1;}
 }
+
+/* 🔥🔥🔥 모바일 최적화 핵심 */
+@media (max-width:480px){
+
+  .logo{
+    font-size:42px;
+    letter-spacing:6px;
+  }
+
+  .hero p{
+    font-size:12px;
+  }
+
+  .btn{
+    height:50px;
+    font-size:14px;
+  }
+
+  .section{
+    margin:60px auto;
+  }
+
+  .card{
+    padding:16px;
+    font-size:14px;
+  }
+
+  .video-card{
+    min-width:80%;
+  }
+
+  .insta-card{
+    padding:20px;
+  }
+
+}
 </style>
 </head>
 
@@ -256,13 +296,13 @@ body{
     </div>
 
     <div class="video-card">
-      <video autoplay muted loop playsinline>
+      <video controls playsinline>
         <source src="video.mp4" type="video/mp4">
       </video>
     </div>
 
     <div class="video-card">
-      <video autoplay muted loop playsinline>
+      <video controls playsinline>
         <source src="video.mp4" type="video/mp4">
       </video>
     </div>
@@ -283,7 +323,6 @@ body{
 
 <div class="footer">© YOUR FILM</div>
 
-<!-- 플로팅 -->
 <a href="https://open.kakao.com/o/너링크" class="floating-kakao">카톡</a>
 <button onclick="scrollToTop()" class="top-btn">↑</button>
 
