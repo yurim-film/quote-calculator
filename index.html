@@ -24,25 +24,55 @@ body{
   position:relative;
 }
 
+/* 타이틀 애니메이션 */
 .hero h1{
   font-size:52px;
   font-weight:900;
   letter-spacing:3px;
+
+  opacity:0;
+  transform:translateY(30px);
+  animation:titleFadeUp 1s ease forwards;
 }
 
 .hero p{
   margin-top:10px;
   color:#aaa;
   font-size:14px;
+
+  opacity:0;
+  transform:translateY(20px);
+  animation:titleFadeUp 1s ease forwards;
+  animation-delay:0.3s;
 }
 
-/* 네온 효과 */
+/* 네온 펄스 */
 .neon{
   color:#7b61ff;
   text-shadow:
     0 0 5px #7b61ff,
     0 0 10px #7b61ff,
     0 0 20px #7b61ff;
+  animation:neonPulse 2s infinite;
+}
+
+@keyframes neonPulse{
+  0%{
+    text-shadow:0 0 5px #7b61ff, 0 0 10px #7b61ff;
+  }
+  50%{
+    text-shadow:0 0 20px #7b61ff, 0 0 40px #7b61ff;
+  }
+  100%{
+    text-shadow:0 0 5px #7b61ff, 0 0 10px #7b61ff;
+  }
+}
+
+@keyframes titleFadeUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 /* 버튼 */
@@ -65,26 +95,22 @@ body{
   transition:0.2s;
 }
 
-/* 메인 버튼 (네온) */
 .btn-main{
   background:#7b61ff;
   color:white;
   box-shadow:0 0 20px rgba(123,97,255,0.6);
 }
 
-/* 카톡 */
 .btn-kakao{
   background:#fee500;
   color:#000;
 }
 
-/* 인스타 */
 .btn-insta{
   border:1px solid #333;
   color:#ccc;
 }
 
-/* 인터랙션 */
 .btn:hover{
   transform:translateY(-3px);
 }
@@ -93,11 +119,20 @@ body{
   transform:scale(0.94);
 }
 
-/* SECTION */
+/* SECTION (스크롤 애니메이션) */
 .section{
   max-width:420px;
   margin:100px auto;
   padding:0 20px;
+
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 0.8s ease;
+}
+
+.section.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* 카드 */
@@ -182,28 +217,20 @@ body{
   transform:translateY(0);
 }
 
-.footer{
-  text-align:center;
-  margin:80px 0;
-  font-size:12px;
-  color:#555;
-}
-  .bg-video{
+/* 영상 */
+.bg-video{
   position:absolute;
   top:50%;
   left:50%;
-
   width:100vw;
   height:100vh;
-
   transform:translate(-50%, -50%);
   object-fit:cover;
-
   z-index:-2;
   opacity:0.4;
 }
 
-/* 영상 위 어둡게 덮기 */
+/* 영상 어둡게 */
 .hero::after{
   content:"";
   position:absolute;
@@ -214,19 +241,23 @@ body{
   background:rgba(0,0,0,0.6);
   z-index:-1;
 }
+
+.footer{
+  text-align:center;
+  margin:80px 0;
+  font-size:12px;
+  color:#555;
+}
 </style>
 </head>
 
 <body>
 
-<!-- HERO -->
 <div class="hero">
-  
-  <!-- 🎬 배경 영상 -->
   <video autoplay muted loop playsinline class="bg-video">
     <source src="video.mp4" type="video/mp4">
   </video>
-  
+
   <h1 class="neon">YOUR FILM</h1>
   <p>MOVE. SHOOT. CREATE.</p>
 
@@ -235,36 +266,29 @@ body{
   <a href="https://instagram.com/너아이디" class="btn btn-insta">포트폴리오 보기</a>
 </div>
 
-<!-- ABOUT -->
 <div class="section">
   <h2 class="neon">WHY YOUR FILM</h2>
-
   <div class="card">댄스 퍼포먼스 전문 촬영</div>
   <div class="card">빠른 작업 & 감각적인 연출</div>
   <div class="card">움직임을 가장 멋있게 기록</div>
 </div>
 
-<!-- PORTFOLIO -->
 <div class="section">
   <h2 class="neon">PORTFOLIO</h2>
-
   <div class="insta-card">
     <p>작업은 인스타그램에서 확인하세요</p>
-
     <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
       작업 보러가기 →
     </a>
   </div>
 </div>
 
-<!-- CTA -->
 <div class="section">
   <a href="quote.html" class="btn btn-main">지금 견적 확인하기</a>
 </div>
 
 <div class="footer">© YOUR FILM</div>
 
-<!-- 플로팅 -->
 <a href="https://open.kakao.com/o/너링크" class="floating-kakao">카톡</a>
 <button onclick="scrollToTop()" class="top-btn">↑</button>
 
@@ -272,6 +296,7 @@ body{
 window.addEventListener("scroll", function(){
   const kakao = document.querySelector(".floating-kakao");
   const topBtn = document.querySelector(".top-btn");
+  const sections = document.querySelectorAll(".section");
 
   if(window.scrollY > 200){
     kakao.classList.add("show");
@@ -280,6 +305,13 @@ window.addEventListener("scroll", function(){
     kakao.classList.remove("show");
     topBtn.classList.remove("show");
   }
+
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      section.classList.add("show");
+    }
+  });
 });
 
 function scrollToTop(){
