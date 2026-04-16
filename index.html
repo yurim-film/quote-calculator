@@ -232,6 +232,22 @@ body{
   font-size:12px;
   color:#555;
 }
+
+  /* 영상 카드 */
+.video-card{
+  width:100%;
+  margin-top:20px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #222;
+  background:#000;
+}
+
+/* 영상 */
+.video-card video{
+  width:100%;
+  display:block;
+}
 </style>
 </head>
 
@@ -264,8 +280,24 @@ body{
 <!-- PORTFOLIO -->
 <div class="section">
   <h2>PORTFOLIO</h2>
+
+  <!-- 영상 1 -->
+  <div class="video-card">
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- 영상 2 -->
+  <div class="video-card">
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- 인스타 연결 -->
   <div class="insta-card">
-    <p>작업은 인스타그램에서 확인하세요</p>
+    <p>더 많은 작업은 인스타그램에서 확인하세요</p>
     <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
       작업 보러가기 →
     </a>
