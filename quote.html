@@ -2,10 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>촬영 견적 계산</title>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
@@ -38,7 +39,6 @@ input {
   background:#1a1a1d;
   color:white;
   box-sizing:border-box;
-  line-height:1.4;
   margin-top:10px;
 }
 
@@ -58,20 +58,36 @@ input {
   margin-top:10px;
 }
 
-button {
-  width:100%;
+/* 🔥 옵션 버튼 업그레이드 */
+.options button{
+  flex:1;
+  min-width:30%;
   padding:12px;
-  border:none;
   border-radius:20px;
   background:#2a2a2e;
   color:white;
+  border:none;
   cursor:pointer;
+  transition:0.25s;
 }
 
 button.active {
   background:#7b61ff;
+  transform:scale(1.05);
+  box-shadow:0 0 10px rgba(123,97,255,0.6);
+  animation:pop 0.2s ease;
 }
 
+.options button:active{
+  transform:scale(0.92);
+}
+
+@keyframes pop{
+  0%{ transform:scale(0.9); }
+  100%{ transform:scale(1.05); }
+}
+
+/* 결과 카드 */
 .result-card {
   background:#111;
   border:1px solid #333;
@@ -79,7 +95,7 @@ button.active {
   padding:20px;
   border-radius:16px;
   margin-top:30px;
-  overflow:visible;
+  position:relative;
 }
 
 .result-title {
@@ -103,6 +119,16 @@ button.active {
   line-height:1.5;
 }
 
+/* 🔥 워터마크 */
+.watermark{
+  position:absolute;
+  bottom:10px;
+  right:15px;
+  font-size:12px;
+  color:rgba(255,255,255,0.3);
+  letter-spacing:2px;
+}
+
 .save-btn {
   width:100%;
   background:#7b61ff;
@@ -112,6 +138,10 @@ button.active {
   border-radius:12px;
   margin-top:15px;
   font-size:16px;
+}
+
+.save-btn:active{
+  transform:scale(0.95);
 }
 
 .kakao-btn {
@@ -125,22 +155,14 @@ button.active {
   text-decoration:none;
   font-weight:bold;
 }
-  /* 🔥 모바일 최적화 */
+
+/* 🔥 모바일 */
 @media (max-width:480px){
 
-  body{
-    padding:15px;
-  }
+  body{ padding:15px; }
 
-  .container{
-    padding:0;
-  }
+  h2{ font-size:20px; }
 
-  h2{
-    font-size:20px;
-  }
-
-  /* 입력 */
   input{
     padding:14px;
     font-size:14px;
@@ -150,40 +172,27 @@ button.active {
     gap:8px;
   }
 
-  /* 옵션 버튼 */
   .options{
     gap:6px;
   }
 
   .options button{
-    flex:1;
-    min-width:30%;
     padding:14px;
     font-size:13px;
   }
 
-  /* 결과 카드 */
   .result-card{
     padding:18px;
-    border-radius:14px;
   }
 
-  .total{
-    font-size:26px;
-  }
+  .total{ font-size:26px; }
 
   #detail{
     font-size:12px;
     line-height:1.6;
   }
 
-  /* 저장 버튼 */
-  .save-btn{
-    padding:16px;
-    font-size:15px;
-  }
-
-  /* 카톡 버튼 (핵심🔥) */
+  /* 카톡 버튼 고정 */
   .kakao-btn{
     position:fixed;
     bottom:15px;
@@ -191,11 +200,8 @@ button.active {
     transform:translateX(-50%);
     width:90%;
     max-width:380px;
-    font-size:16px;
-    padding:18px;
     z-index:999;
   }
-
 }
 </style>
 </head>
@@ -245,6 +251,9 @@ button.active {
 
   <hr style="margin:15px 0; border:0.5px solid #333;">
   <p id="date" style="font-size:12px; color:#888;"></p>
+
+  <!-- 🔥 워터마크 -->
+  <div class="watermark">YOUR FILM</div>
 </div>
 
 <button onclick="saveImage()" class="save-btn">
@@ -272,140 +281,102 @@ function toggleOption(name, price, el){
 }
 
 function update(){
-  let client = document.getElementById("client").value || "";
-  let phone = document.getElementById("phone").value || "";
-  let insta = document.getElementById("insta").value || "";
+  let client = clientEl.value || "";
+  let phone = phoneEl.value || "";
+  let insta = instaEl.value || "";
 
-  let people = parseInt(document.getElementById("people").value) || 0;
-  let min = parseInt(document.getElementById("music_min").value) || 0;
-  let sec = parseInt(document.getElementById("music_sec").value) || 0;
-  let time = parseInt(document.getElementById("time").value) || 0;
-  let edit = parseInt(document.getElementById("edit").value) || 0;
+  let people = parseInt(peopleEl.value)||0;
+  let min = parseInt(minEl.value)||0;
+  let sec = parseInt(secEl.value)||0;
+  let time = parseInt(timeEl.value)||0;
+  let edit = parseInt(editEl.value)||0;
 
   let total = 0;
   let detail = [];
 
-  // 고객 정보
-  let infoText = "";
-  if(client) infoText += `고객: ${client}<br>`;
-  if(phone) infoText += `연락처: ${phone}<br>`;
-  if(insta) infoText += `인스타: ${insta}`;
-  document.getElementById("clientInfo").innerHTML = infoText;
+  let infoText="";
+  if(client) infoText+=`고객: ${client}<br>`;
+  if(phone) infoText+=`연락처: ${phone}<br>`;
+  if(insta) infoText+=`인스타: ${insta}`;
+  clientInfo.innerHTML=infoText;
 
-  // 인원
-  if(people > 0){
-    let cost = (people > 5) ? people * 50000 : people * 20000;
-    total += cost;
+  if(people>0){
+    let cost=(people>5)?people*50000:people*20000;
+    total+=cost;
     detail.push(`촬영 인원 (${people}명) = ₩${cost.toLocaleString()}`);
   }
 
-  // 음원
-  let totalSec = (min * 60) + sec;
+  let totalSec=min*60+sec;
 
-  if(totalSec > 0){
-    let text = `음원 길이: ${min}분 ${sec}초`;
-    if(totalSec > 60){
-      text += " (기본 1분 포함. 초과시 30초단위 계산)";
-    }
+  if(totalSec>0){
+    let text=`음원 길이: ${min}분 ${sec}초`;
+    if(totalSec>60) text+=" (기본 1분 포함)";
     detail.push(text);
   }
 
-  if(totalSec > 60){
-    let extraSec = totalSec - 60;
-    let extraUnit = Math.ceil(extraSec / 30);
-    let cost = extraUnit * 100000;
-    total += cost;
-
-    let displaySec = extraUnit * 30;
-    let displayMin = Math.floor(displaySec / 60);
-    let remainSec = displaySec % 60;
-
-    let timeText = "";
-    if(displayMin > 0) timeText += `${displayMin}분 `;
-    if(remainSec > 0) timeText += `${remainSec}초 `;
-    timeText += "초과";
-
-    detail.push(`음원 추가 (${timeText}) = ₩${cost.toLocaleString()}`);
+  if(totalSec>60){
+    let extra=Math.ceil((totalSec-60)/30);
+    let cost=extra*100000;
+    total+=cost;
+    detail.push(`음원 추가 (${extra*30}초) = ₩${cost.toLocaleString()}`);
   }
 
-  // 촬영 시간
-  if(time > 0){
-    let cost = time * 50000;
-    total += cost;
+  if(time>0){
+    let cost=time*50000;
+    total+=cost;
     detail.push(`촬영 시간 (${time}시간) = ₩${cost.toLocaleString()}`);
   }
 
-  // 수정
-  if(edit > 0){
-    let text = `총 수정 횟수: ${edit}회`;
-    if(edit > 1){
-      text += " (기본 1회 포함)";
-    }
-    detail.push(text);
+  if(edit>0){
+    detail.push(`총 수정 횟수: ${edit}회 (기본 1회 포함)`);
   }
 
-  if(edit > 1){
-    let cost = (edit - 1) * 30000;
-    total += cost;
-    detail.push(`추가 수정 (${edit - 1}회) = ₩${cost.toLocaleString()}`);
+  if(edit>1){
+    let cost=(edit-1)*30000;
+    total+=cost;
+    detail.push(`추가 수정 (${edit-1}회) = ₩${cost.toLocaleString()}`);
   }
 
-  // 옵션
   for(let key in options){
-    total += options[key];
-
-    let name = "";
-    if(key === "color") name = "색보정";
-    if(key === "fast") name = "빠른 납기";
-    if(key === "outdoor") name = "야외 촬영";
-
+    total+=options[key];
+    let name = key==="color"?"색보정":key==="fast"?"빠른 납기":"야외 촬영";
     detail.push(`옵션 - ${name} = ₩${options[key].toLocaleString()}`);
   }
 
-  // 최소금액
-  if(total < 100000){
-    total = 100000;
+  if(total<100000){
+    total=100000;
     detail.push(`최소 금액 적용 = ₩100,000`);
   }
 
-  document.getElementById("total").innerText =
-    "₩" + total.toLocaleString();
-
-  document.getElementById("detail").innerHTML =
-    detail.map(d => `<p>${d}</p>`).join("");
-
-  document.getElementById("date").innerText =
-    new Date().toLocaleDateString();
+  totalEl.innerText="₩"+total.toLocaleString();
+  detailEl.innerHTML=detail.map(d=>`<p>${d}</p>`).join("");
+  dateEl.innerText=new Date().toLocaleDateString();
 }
 
-document.querySelectorAll("input").forEach(i=>{
-  i.addEventListener("input", update);
-});
+const clientEl=client, phoneEl=phone, instaEl=insta,
+peopleEl=people, minEl=music_min, secEl=music_sec,
+timeEl=time, editEl=edit,
+totalEl=total, detailEl=detail, dateEl=date;
+
+document.querySelectorAll("input").forEach(i=>i.addEventListener("input",update));
 
 function saveImage(){
-  const target = document.getElementById("capture");
-
-  html2canvas(target, {
+  html2canvas(capture,{
     backgroundColor:"#111",
-    scale:2,
-    useCORS:true,
-    scrollY:-window.scrollY
-  }).then(canvas=>{
-    let link = document.createElement("a");
-    link.download = "quote.png";
-    link.href = canvas.toDataURL();
+    scale:2
+  }).then(c=>{
+    let link=document.createElement("a");
+    link.download="quote.png";
+    link.href=c.toDataURL();
     link.click();
   });
 }
 
 function goKakao(){
-  let text = document.getElementById("capture").innerText;
-
-  navigator.clipboard.writeText(text);
-
-  alert("견적이 복사되었습니다!\n카톡에 붙여넣기 해주세요 😊");
-
-  window.open("https://open.kakao.com/o/너링크");
+  navigator.clipboard.writeText(capture.innerText).then(()=>{
+    alert("견적이 복사되었습니다!\n카톡에 붙여넣기 해주세요 😊");
+    window.open("https://open.kakao.com/o/너링크");
+  });
 }
 </script>
 
