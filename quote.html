@@ -5,6 +5,7 @@
 <title>촬영 견적 계산</title>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
@@ -123,6 +124,78 @@ button.active {
   margin-top:20px;
   text-decoration:none;
   font-weight:bold;
+}
+  /* 🔥 모바일 최적화 */
+@media (max-width:480px){
+
+  body{
+    padding:15px;
+  }
+
+  .container{
+    padding:0;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
+  /* 입력 */
+  input{
+    padding:14px;
+    font-size:14px;
+  }
+
+  .flex{
+    gap:8px;
+  }
+
+  /* 옵션 버튼 */
+  .options{
+    gap:6px;
+  }
+
+  .options button{
+    flex:1;
+    min-width:30%;
+    padding:14px;
+    font-size:13px;
+  }
+
+  /* 결과 카드 */
+  .result-card{
+    padding:18px;
+    border-radius:14px;
+  }
+
+  .total{
+    font-size:26px;
+  }
+
+  #detail{
+    font-size:12px;
+    line-height:1.6;
+  }
+
+  /* 저장 버튼 */
+  .save-btn{
+    padding:16px;
+    font-size:15px;
+  }
+
+  /* 카톡 버튼 (핵심🔥) */
+  .kakao-btn{
+    position:fixed;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:380px;
+    font-size:16px;
+    padding:18px;
+    z-index:999;
+  }
+
 }
 </style>
 </head>
