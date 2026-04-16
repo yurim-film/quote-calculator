@@ -15,6 +15,30 @@ body{
   overflow-x:hidden;
 }
 
+/* 로딩 */
+#loader{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:#050507;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  transition:0.6s;
+}
+.loader-text{
+  font-family:'Bebas Neue';
+  font-size:48px;
+  letter-spacing:8px;
+  opacity:0;
+  animation:fadeIn 1.2s forwards;
+}
+#loader.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
 /* HERO */
 .hero{
   height:100vh;
@@ -22,40 +46,38 @@ body{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  text-align:center;
   position:relative;
+  text-align:center;
 }
 
 /* 로고 */
 .logo{
-  font-family:'Bebas Neue', sans-serif;
+  font-family:'Bebas Neue';
   font-size:70px;
   letter-spacing:10px;
-  color:white;
-
-  opacity:0;
-  transform:translateY(30px);
-  animation:titleFadeUp 1s ease forwards;
 }
 
-/* 서브텍스트 */
-.hero p{
-  margin-top:15px;
-  color:#aaa;
-  font-size:14px;
-
-  opacity:0;
-  transform:translateY(20px);
-  animation:titleFadeUp 1s ease forwards;
-  animation-delay:0.3s;
+/* 영상 */
+.bg-video{
+  position:absolute;
+  top:50%; left:50%;
+  width:100vw; height:100vh;
+  transform:translate(-50%,-50%);
+  object-fit:cover;
+  z-index:-2;
+  opacity:0.5;
 }
 
-/* 애니메이션 */
-@keyframes titleFadeUp{
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+/* 어둡게 */
+.hero::after{
+  content:"";
+  position:absolute;
+  width:100%; height:100%;
+  background:linear-gradient(
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.6)
+  );
+  z-index:-1;
 }
 
 /* 버튼 */
@@ -63,62 +85,30 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-
   height:56px;
   width:100%;
   max-width:260px;
-  padding:0 20px;
-
   margin-top:15px;
-
   border-radius:30px;
   text-decoration:none;
   font-weight:bold;
-
   transition:0.2s;
 }
+.btn-main{ background:white; color:black; }
+.btn-kakao{ background:#fee500; color:black; }
+.btn-insta{ border:1px solid #333; color:#ccc; }
 
-.btn-main{
-  background:white;
-  color:black;
-}
+.btn:hover{ transform:translateY(-3px); }
+.btn:active{ transform:scale(0.94); }
 
-.btn-kakao{
-  background:#fee500;
-  color:#000;
-}
-
-.btn-insta{
-  border:1px solid #333;
-  color:#ccc;
-}
-
-.btn:hover{
-  transform:translateY(-3px);
-}
-
-.btn:active{
-  transform:scale(0.94);
-}
-
-/* SECTION (중앙 정렬 포함) */
+/* 섹션 */
 .section{
   max-width:420px;
   margin:100px auto;
   padding:0 20px;
-
   display:flex;
   flex-direction:column;
   align-items:center;
-
-  opacity:0;
-  transform:translateY(40px);
-  transition:all 0.8s ease;
-}
-
-.section.show{
-  opacity:1;
-  transform:translateY(0);
 }
 
 /* 카드 */
@@ -131,7 +121,33 @@ body{
   background:#0d0d12;
 }
 
-/* 포트폴리오 */
+/* 🔥 영상 슬라이드 */
+.video-slider{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  scroll-snap-type:x mandatory;
+}
+.video-slider::-webkit-scrollbar{ display:none; }
+
+.video-card{
+  min-width:220px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #222;
+  background:#000;
+  scroll-snap-align:start;
+  transition:0.3s;
+}
+.video-card video{
+  width:100%;
+}
+.video-card:hover{
+  transform:scale(1.05);
+}
+
+/* 인스타 카드 */
 .insta-card{
   width:100%;
   margin-top:20px;
@@ -140,7 +156,6 @@ body{
   border:1px solid #222;
   text-align:center;
 }
-
 .insta-btn{
   display:inline-block;
   margin-top:15px;
@@ -151,26 +166,19 @@ body{
   text-decoration:none;
 }
 
-/* 플로팅 카톡 */
+/* 플로팅 */
 .floating-kakao{
   position:fixed;
-  bottom:20px;
-  right:20px;
-
+  bottom:20px; right:20px;
   padding:14px 18px;
   border-radius:30px;
-
   background:#fee500;
   color:#000;
-
   font-weight:bold;
-  text-decoration:none;
-
   opacity:0;
   transform:translateY(20px);
   transition:0.3s;
 }
-
 .floating-kakao.show{
   opacity:1;
   transform:translateY(0);
@@ -179,51 +187,19 @@ body{
 /* TOP 버튼 */
 .top-btn{
   position:fixed;
-  bottom:90px;
-  right:20px;
-
-  width:50px;
-  height:50px;
-
+  bottom:90px; right:20px;
+  width:50px; height:50px;
   border:none;
   border-radius:50%;
-
   background:#111;
   color:white;
-
   opacity:0;
   transform:translateY(20px);
   transition:0.3s;
 }
-
 .top-btn.show{
   opacity:1;
   transform:translateY(0);
-}
-
-/* 배경 영상 */
-.bg-video{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:100vw;
-  height:100vh;
-  transform:translate(-50%, -50%);
-  object-fit:cover;
-  z-index:-2;
-  opacity:0.35;
-}
-
-/* 어둡게 */
-.hero::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  z-index:-1;
 }
 
 .footer{
@@ -233,35 +209,26 @@ body{
   color:#555;
 }
 
-  /* 영상 카드 */
-.video-card{
-  width:100%;
-  margin-top:20px;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid #222;
-  background:#000;
-}
-
-/* 영상 */
-.video-card video{
-  width:100%;
-  display:block;
+@keyframes fadeIn{
+  to{opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
+<!-- 로딩 -->
+<div id="loader">
+  <div class="loader-text">YOUR FILM</div>
+</div>
+
 <!-- HERO -->
 <div class="hero">
-
   <video autoplay muted loop playsinline class="bg-video">
     <source src="video.mp4" type="video/mp4">
   </video>
 
   <h1 class="logo">YOUR FILM</h1>
-
   <p>MOVE. SHOOT. CREATE.</p>
 
   <a href="quote.html" class="btn btn-main">견적 계산하기</a>
@@ -281,21 +248,26 @@ body{
 <div class="section">
   <h2>PORTFOLIO</h2>
 
-  <!-- 영상 1 -->
-  <div class="video-card">
-    <video autoplay muted loop playsinline>
-      <source src="video.mp4" type="video/mp4">
-    </video>
+  <div class="video-slider">
+    <div class="video-card">
+      <video autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="video-card">
+      <video controls playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="video-card">
+      <video controls playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 
-  <!-- 영상 2 -->
-  <div class="video-card">
-    <video autoplay muted loop playsinline>
-      <source src="video.mp4" type="video/mp4">
-    </video>
-  </div>
-
-  <!-- 인스타 연결 -->
   <div class="insta-card">
     <p>더 많은 작업은 인스타그램에서 확인하세요</p>
     <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
@@ -316,32 +288,20 @@ body{
 <button onclick="scrollToTop()" class="top-btn">↑</button>
 
 <script>
-window.addEventListener("scroll", function(){
-  const kakao = document.querySelector(".floating-kakao");
-  const topBtn = document.querySelector(".top-btn");
-  const sections = document.querySelectorAll(".section");
+window.addEventListener("load", () => {
+  setTimeout(()=>{
+    document.getElementById("loader").classList.add("hide");
+  },1200);
+});
 
-  if(window.scrollY > 200){
-    kakao.classList.add("show");
-    topBtn.classList.add("show");
-  } else {
-    kakao.classList.remove("show");
-    topBtn.classList.remove("show");
-  }
-
-  sections.forEach(section => {
-    const top = section.getBoundingClientRect().top;
-    if(top < window.innerHeight - 100){
-      section.classList.add("show");
-    }
-  });
+window.addEventListener("scroll", () => {
+  const y = window.scrollY;
+  document.querySelector(".floating-kakao").classList.toggle("show", y>200);
+  document.querySelector(".top-btn").classList.toggle("show", y>200);
 });
 
 function scrollToTop(){
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+  window.scrollTo({top:0, behavior:"smooth"});
 }
 </script>
 
