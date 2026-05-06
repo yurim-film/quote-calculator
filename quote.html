@@ -26,7 +26,7 @@ h2{
   text-align:center;
 }
 
-/* input 공통 */
+/* input */
 input{
   width:100%;
   height:52px;
@@ -36,10 +36,9 @@ input{
   border:none;
   background:#1a1a1d;
   color:white;
-  box-sizing:border-box;
 }
 
-/* 🔥 2칸 레이아웃 */
+/* 2칸 */
 .input-row{
   display:flex;
   gap:10px;
@@ -56,11 +55,10 @@ input{
   display:block;
 }
 
-/* 📅 달력 */
+/* 📅 */
 input[type="date"]::-webkit-calendar-picker-indicator{
   opacity:0;
   position:absolute;
-  right:0;
   width:100%;
   height:100%;
 }
@@ -96,6 +94,7 @@ input[type="date"]::-webkit-calendar-picker-indicator{
   border:1px solid #333;
   background:#1a1a1d;
   color:#aaa;
+  cursor:pointer;
 }
 
 .time-grid button.active{
@@ -261,9 +260,24 @@ const grid=document.getElementById("timeGrid");
 times.forEach(t=>{
   let btn=document.createElement("button");
   btn.innerText=t;
-  btn.onclick=()=>{selectedTime=t;update();};
+  btn.onclick=()=>selectTime(t, btn);
   grid.appendChild(btn);
 });
+
+/* 🔥 시간 선택 FIX */
+function selectTime(time, el){
+
+  if(el.classList.contains("disabled")) return;
+
+  selectedTime = time;
+
+  document.querySelectorAll(".time-grid button")
+    .forEach(b => b.classList.remove("active"));
+
+  el.classList.add("active");
+
+  update();
+}
 
 /* 옵션 */
 function toggleOption(name,price,el){
@@ -290,6 +304,10 @@ function update(){
 
   if(client || phone){
     detail.push(`<strong>${client} ${phone}</strong>`);
+  }
+
+  if(selectedTime){
+    detail.push(`촬영 시작: ${selectedTime}`);
   }
 
   if(duration){
