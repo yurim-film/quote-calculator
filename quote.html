@@ -169,9 +169,9 @@ input{
 <input type="number" id="people" placeholder="촬영 인원">
 
 <div class="options">
-  <button onclick="toggleOption('색보정',80000,this)">색보정</button>
+  <button onclick="toggleOption('색보정',50000,this)">색보정</button>
   <button onclick="toggleOption('빠른납기',100000,this)">빠른 납기</button>
-  <button onclick="toggleOption('야외촬영',70000,this)">야외 촬영</button>
+  <button onclick="toggleOption('야외촬영',50000,this)">야외 촬영</button>
 </div>
 
 <div class="result-card" id="capture">
@@ -264,6 +264,18 @@ function update(){
   let detail=[];
   let total=0;
 
+    let client = document.getElementById("client").value || "";
+  let phone = document.getElementById("phone").value || "";
+
+  if(client || phone){
+    let info = "";
+
+    if(client) info += `고객명: ${client} `;
+    if(phone) info += `(${phone})`;
+
+    detail.push(info);
+  }
+  
   let date=document.getElementById("shoot_date").value;
   let duration=parseFloat(document.getElementById("duration").value)||0;
   let people=parseInt(document.getElementById("people").value)||0;
