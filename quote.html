@@ -37,6 +37,35 @@ input{
   color:white;
 }
 
+/* 🔥 기본 달력 아이콘 제거 */
+input[type="date"]::-webkit-calendar-picker-indicator{
+  opacity:0;
+  position:absolute;
+  right:0;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+}
+
+/* 📅 커스텀 달력 */
+.date-wrap{
+  position:relative;
+}
+
+.date-wrap input{
+  padding-right:45px;
+}
+
+.calendar-icon{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:20px;
+  z-index:2;
+  cursor:pointer;
+}
+
 /* 시간 선택 */
 .time-grid{
   display:grid;
@@ -52,7 +81,6 @@ input{
   background:#1a1a1d;
   color:#aaa;
   cursor:pointer;
-  transition:0.2s;
 }
 
 .time-grid button.active{
@@ -102,7 +130,6 @@ input{
   color:#7b61ff;
 }
 
-/* 워터마크 */
 .watermark{
   position:absolute;
   bottom:10px;
@@ -111,7 +138,7 @@ input{
   color:rgba(255,255,255,0.3);
 }
 
-/* 저장 버튼 */
+/* 버튼 */
 .save-btn{
   width:100%;
   padding:14px;
@@ -122,24 +149,20 @@ input{
   color:white;
 }
 
-/* 🔥 CTA 버튼 (숨김 → 등장) */
+/* CTA */
 .kakao-btn{
   position:fixed;
   bottom:15px;
   left:50%;
   transform:translate(-50%, 20px);
-
   width:90%;
   max-width:380px;
-
   padding:16px;
   border-radius:14px;
-
   background:#fee500;
   color:#000;
   text-align:center;
   font-weight:bold;
-
   opacity:0;
   transition:0.3s;
 }
@@ -160,7 +183,11 @@ input{
 <input type="text" id="client" placeholder="고객 이름">
 <input type="text" id="phone" placeholder="연락처">
 
-<input type="date" id="shoot_date">
+<!-- 📅 날짜 선택 -->
+<div class="date-wrap">
+  <input type="date" id="shoot_date">
+  <span class="calendar-icon" onclick="openDate()">📆</span>
+</div>
 
 <p>촬영 시작 시간</p>
 <div class="time-grid" id="timeGrid"></div>
@@ -176,10 +203,8 @@ input{
 
 <div class="result-card" id="capture">
   <h3>YOUR FILM</h3>
-
   <div id="detail"></div>
   <div class="total" id="total">₩0</div>
-
   <div class="watermark">YOUR FILM</div>
 </div>
 
@@ -187,7 +212,6 @@ input{
 
 </div>
 
-<!-- CTA -->
 <div class="kakao-btn" onclick="goKakao()">
 🔥 지금 바로 견적 받고 상담하기
 </div>
@@ -196,6 +220,11 @@ input{
 
 let selectedTime = "";
 let options = {};
+
+/* 📅 달력 열기 */
+function openDate(){
+  document.getElementById("shoot_date").showPicker();
+}
 
 /* 시간 생성 */
 const times=["00:00","02:00","04:00","06:00","08:00","10:00","12:00","14:00","16:00","18:00","20:00","22:00"];
@@ -214,37 +243,12 @@ function selectTime(time,el){
   if(el.classList.contains("disabled")) return;
 
   selectedTime=time;
-
   document.querySelectorAll(".time-grid button")
     .forEach(b=>b.classList.remove("active"));
 
   el.classList.add("active");
   update();
 }
-
-/* 날짜 제한 */
-document.getElementById("shoot_date").addEventListener("change",()=>{
-
-  let day=new Date(document.getElementById("shoot_date").value).getDay();
-
-  document.querySelectorAll(".time-grid button").forEach(btn=>{
-
-    let hour=parseInt(btn.dataset.time.split(":")[0]);
-
-    btn.classList.remove("disabled");
-
-    if(day===4){
-      btn.classList.add("disabled");
-    }
-
-    if(day>=1 && day<=3){
-      if(hour>=9 && hour<23){
-        btn.classList.add("disabled");
-      }
-    }
-  });
-
-});
 
 /* 옵션 */
 function toggleOption(name,price,el){
@@ -264,52 +268,18 @@ function update(){
   let detail=[];
   let total=0;
 
-    let client = document.getElementById("client").value || "";
-  let phone = document.getElementById("phone").value || "";
+  let client=document.getElementById("client").value || "";
+  let phone=document.getElementById("phone").value || "";
 
   if(client || phone){
-    let info = "";
-
-    if(client) info += `고객명: ${client} `;
-    if(phone) info += `(${phone})`;
-
-    detail.push(info);
+    let info="";
+    if(client) info+=`고객명: ${client} `;
+    if(phone) info+=`(${phone})`;
+    detail.push(`<strong>${info}</strong>`);
   }
-  
-  let date=document.getElementById("shoot_date").value;
+
   let duration=parseFloat(document.getElementById("duration").value)||0;
   let people=parseInt(document.getElementById("people").value)||0;
-
-  if(date || selectedTime || duration){
-
-    let text="";
-
-    if(date){
-      let d=new Date(date);
-      text+=`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 `;
-    }
-
-    if(selectedTime && duration){
-      let [h,m]=selectedTime.split(":").map(Number);
-
-      let start=new Date();
-      start.setHours(h);
-      start.setMinutes(m);
-
-      let end=new Date(start);
-      end.setHours(end.getHours()+duration);
-
-      let endH=String(end.getHours()).padStart(2,'0');
-      let endM=String(end.getMinutes()).padStart(2,'0');
-
-      text+=`${selectedTime} ~ ${endH}:${endM}`;
-    }
-    else if(duration){
-      text+=`${duration}시간 촬영`;
-    }
-
-    detail.push(`촬영 일정: ${text}`);
-  }
 
   if(duration>0){
     let cost=duration*50000;
@@ -332,20 +302,17 @@ function update(){
   document.getElementById("total").innerText="₩"+total.toLocaleString();
 }
 
-/* CTA 등장 */
+/* CTA */
 window.addEventListener("scroll",()=>{
-
   let btn=document.querySelector(".kakao-btn");
-
   if(window.scrollY>200){
     btn.classList.add("show");
   }else{
     btn.classList.remove("show");
   }
-
 });
 
-/* 이미지 저장 */
+/* 저장 */
 function saveImage(){
   html2canvas(document.getElementById("capture"))
   .then(c=>{
