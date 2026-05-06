@@ -16,22 +16,10 @@ body{
   padding:20px;
   padding-bottom:120px;
 }
+.container{max-width:420px;margin:auto;}
+h2{text-align:center;}
 
-.container{
-  max-width:420px;
-  margin:auto;
-}
-
-h2{
-  text-align:center;
-}
-
-/* input */
-.input-row{
-  display:flex;
-  gap:10px;
-}
-
+.input-row{display:flex;gap:10px;}
 input{
   width:100%;
   height:52px;
@@ -43,19 +31,6 @@ input{
   color:white;
 }
 
-/* 날짜 */
-.date-wrap{
-  position:relative;
-}
-
-.calendar-icon{
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  cursor:pointer;
-}
-
 /* 시간 */
 .time-grid{
   display:grid;
@@ -63,20 +38,16 @@ input{
   gap:10px;
   margin-top:10px;
 }
-
 .time-grid button{
   padding:14px;
   border-radius:12px;
   border:1px solid #333;
   background:#1a1a1d;
   color:#aaa;
-  cursor:pointer;
 }
-
 .time-grid button.active{
   background:#7b61ff;
   color:white;
-  transform:scale(1.05);
 }
 
 /* 옵션 */
@@ -86,17 +57,14 @@ input{
   gap:8px;
   margin-top:10px;
 }
-
 .options button{
   flex:1;
   min-width:30%;
   padding:12px;
   border-radius:20px;
-  border:none;
   background:#2a2a2e;
   color:white;
 }
-
 .options button.active{
   background:#7b61ff;
 }
@@ -108,20 +76,9 @@ input{
   border-radius:16px;
   margin-top:20px;
 }
+.total{font-size:30px;color:#7b61ff;}
+.info{font-size:12px;color:#888;margin-top:10px;}
 
-.total{
-  font-size:30px;
-  color:#7b61ff;
-}
-
-.info{
-  font-size:12px;
-  color:#888;
-  margin-top:10px;
-  line-height:1.5;
-}
-
-/* 버튼 */
 .save-btn{
   width:100%;
   padding:14px;
@@ -149,7 +106,6 @@ input{
   opacity:0;
   transition:0.3s;
 }
-
 .kakao-btn.show{
   opacity:1;
   transform:translate(-50%, 0);
@@ -163,56 +119,37 @@ input{
 
 <h2>촬영 견적 계산</h2>
 
-<!-- 이름 + 연락처 -->
 <div class="input-row">
   <input type="text" id="client" placeholder="고객 이름">
   <input type="text" id="phone" placeholder="연락처">
 </div>
 
-<!-- 날짜 -->
-<div class="date-wrap">
-  <input type="date" id="shoot_date">
-  <span class="calendar-icon" onclick="openDate()">📆</span>
-</div>
+<input type="date" id="shoot_date">
 
 <p>촬영 시작 시간</p>
 <div class="time-grid" id="timeGrid"></div>
 
-<!-- 시간 + 인원 -->
 <div class="input-row">
   <input type="number" id="duration" placeholder="촬영 시간 (시간)">
   <input type="number" id="people" placeholder="촬영 인원">
 </div>
 
+<input type="number" id="edit" placeholder="추가 수정 횟수 (1회 3만원)">
+
 <!-- 옵션 -->
 <div class="options">
   <button onclick="toggleOption('색보정',50000,this)">색보정</button>
   <button onclick="toggleOption('야외촬영',50000,this)">야외 촬영</button>
-
-  <button onclick="toggleOption('인스타 세로영상',70000,this)">
-    인스타 세로 영상 🔥
-  </button>
-
-  <button onclick="toggleOption('하이라이트 영상',100000,this)">
-    하이라이트 영상 ⭐
-  </button>
-
+  <button onclick="toggleOption('인스타 세로영상',70000,this)">인스타 세로 영상 🔥</button>
+  <button onclick="toggleOption('하이라이트 영상',100000,this)">하이라이트 영상 ⭐</button>
   <button onclick="toggleOption('빠른납기',80000,this)">빠른 납기</button>
-
-  <!-- 🔥 추가 -->
-  <button onclick="toggleOption('추가 수정 (1회)',30000,this)">
-    추가 수정 (1회)
-  </button>
 </div>
 
-<!-- 결과 -->
 <div class="result-card" id="capture">
   <h3>YOUR FILM</h3>
-
   <div id="detail"></div>
   <div class="total" id="total">₩0</div>
 
-  <!-- 🔥 기본 포함 안내 -->
   <div class="info">
     ✔ 기본 편집 포함<br>
     ✔ 1회 수정 포함<br>
@@ -224,17 +161,13 @@ input{
 
 </div>
 
-<!-- CTA -->
-<div class="kakao-btn" onclick="goKakao()">
-🔥 지금 바로 견적 받고 상담하기
-</div>
+<div class="kakao-btn" onclick="goKakao()">🔥 상담하기</div>
 
 <script>
 
 let selectedTime="";
 let options={};
 
-/* 시간 생성 */
 const times=["00:00","02:00","04:00","06:00","08:00","10:00","12:00","14:00","16:00","18:00","20:00","22:00"];
 const grid=document.getElementById("timeGrid");
 
@@ -245,18 +178,13 @@ times.forEach(t=>{
   grid.appendChild(btn);
 });
 
-/* 시간 선택 */
 function selectTime(time, el){
   selectedTime=time;
-
-  document.querySelectorAll(".time-grid button")
-    .forEach(b=>b.classList.remove("active"));
-
+  document.querySelectorAll(".time-grid button").forEach(b=>b.classList.remove("active"));
   el.classList.add("active");
   update();
 }
 
-/* 옵션 */
 function toggleOption(name,price,el){
   if(options[name]){
     delete options[name];
@@ -268,7 +196,6 @@ function toggleOption(name,price,el){
   update();
 }
 
-/* 계산 */
 function update(){
 
   let total=0;
@@ -276,15 +203,35 @@ function update(){
 
   let client=document.getElementById("client").value;
   let phone=document.getElementById("phone").value;
+  let date=document.getElementById("shoot_date").value;
   let duration=parseFloat(document.getElementById("duration").value)||0;
   let people=parseInt(document.getElementById("people").value)||0;
+  let edit=parseInt(document.getElementById("edit").value)||0;
 
   if(client || phone){
     detail.push(`<strong>${client} ${phone}</strong>`);
   }
 
-  if(selectedTime){
-    detail.push(`촬영 시작: ${selectedTime}`);
+  // 🔥 일정 표시 FIX
+  if(date || selectedTime){
+    let text="";
+
+    if(date){
+      let d=new Date(date);
+      text+=`${d.getMonth()+1}/${d.getDate()} `;
+    }
+
+    if(selectedTime && duration){
+      let [h,m]=selectedTime.split(":").map(Number);
+      let endH=h+duration;
+
+      text+=`${selectedTime} ~ ${String(endH).padStart(2,'0')}:${m}`;
+    }
+    else if(selectedTime){
+      text+=selectedTime;
+    }
+
+    detail.push(`촬영 일정: ${text}`);
   }
 
   if(duration){
@@ -299,6 +246,12 @@ function update(){
     detail.push(`촬영 인원 = ₩${cost.toLocaleString()}`);
   }
 
+  if(edit){
+    let cost=edit*30000;
+    total+=cost;
+    detail.push(`추가 수정 (${edit}회) = ₩${cost.toLocaleString()}`);
+  }
+
   for(let k in options){
     total+=options[k];
     detail.push(`${k} = ₩${options[k].toLocaleString()}`);
@@ -308,19 +261,16 @@ function update(){
   document.getElementById("total").innerText="₩"+total.toLocaleString();
 }
 
-/* 이벤트 */
 document.querySelectorAll("input").forEach(i=>{
   i.addEventListener("input",update);
 });
 
-/* CTA */
 window.addEventListener("scroll",()=>{
   let btn=document.querySelector(".kakao-btn");
   if(window.scrollY>200) btn.classList.add("show");
   else btn.classList.remove("show");
 });
 
-/* 저장 */
 function saveImage(){
   html2canvas(document.getElementById("capture")).then(c=>{
     let a=document.createElement("a");
@@ -330,14 +280,9 @@ function saveImage(){
   });
 }
 
-/* 카톡 */
 function goKakao(){
   let text=document.getElementById("capture").innerText;
   window.open("https://open.kakao.com/o/너링크?text="+encodeURIComponent(text));
-}
-
-function openDate(){
-  document.getElementById("shoot_date").showPicker();
 }
 
 </script>
