@@ -47,10 +47,10 @@ body{
 
 .loader-text{
   font-family:'Bebas Neue';
-  font-size:52px;
+  font-size:48px;
   letter-spacing:10px;
-  animation:fade 1.2s forwards;
   opacity:0;
+  animation:fade 1.2s forwards;
 }
 
 @keyframes fade{
@@ -63,13 +63,13 @@ body{
 
 .hero{
   position:relative;
-  height:100vh;
+  height:100svh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-  padding:0 24px;
+  padding:0 20px;
 }
 
 .bg-video{
@@ -77,13 +77,14 @@ body{
   top:50%;
   left:50%;
   width:100vw;
-  height:100vh;
-  object-fit:cover;
+  height:100svh;
   transform:translate(-50%,-50%);
-  z-index:-2;
+  object-fit:cover;
 
   opacity:.72;
   filter:brightness(1.05);
+
+  z-index:-2;
 }
 
 .hero::after{
@@ -92,122 +93,80 @@ body{
   inset:0;
   background:linear-gradient(
     rgba(0,0,0,.15),
-    rgba(0,0,0,.65)
+    rgba(0,0,0,.68)
   );
   z-index:-1;
 }
 
 .logo{
   font-family:'Bebas Neue';
-  font-size:72px;
-  letter-spacing:10px;
+  font-size:42px;
+  letter-spacing:6px;
 }
 
 .hero-title{
-  margin-top:10px;
-  font-size:28px;
-  line-height:1.35;
+  margin-top:14px;
+  font-size:20px;
+  line-height:1.25;
   font-weight:700;
-  letter-spacing:-1px;
+  letter-spacing:-0.5px;
 }
 
 .hero-sub{
   margin-top:14px;
-  font-size:14px;
-  color:#c8c8c8;
+  font-size:13px;
+  color:#bcbcbc;
+  line-height:1.7;
 }
 
-/* ---------------- BUTTON ---------------- */
+/* scroll */
 
-.hero-buttons{
-  width:100%;
-  max-width:280px;
-  margin-top:38px;
+.scroll-down{
+  position:absolute;
+  bottom:35px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  letter-spacing:3px;
+  color:#cfcfcf;
+  opacity:.8;
+  animation:updown 1.6s infinite;
 }
 
-.btn{
-  width:100%;
-  height:58px;
-  border-radius:999px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  font-size:15px;
-  font-weight:700;
-  transition:.2s;
-}
-
-.btn-main{
-  background:white;
-  color:black;
-}
-
-.btn-sub{
-  margin-top:12px;
-  border:1px solid #2a2a2a;
-  color:#d0d0d0;
-  background:rgba(255,255,255,0.02);
-}
-
-.btn:hover{
-  transform:translateY(-2px);
-}
-
-.btn:active{
-  transform:scale(.97);
+@keyframes updown{
+  0%{
+    transform:translate(-50%,0);
+  }
+  50%{
+    transform:translate(-50%,6px);
+  }
+  100%{
+    transform:translate(-50%,0);
+  }
 }
 
 /* ---------------- SECTION ---------------- */
 
 .section{
-  max-width:1100px;
-  margin:120px auto;
+  margin:70px auto;
   padding:0 20px;
 }
 
 .section-title{
   font-family:'Bebas Neue';
-  font-size:42px;
+  font-size:34px;
   letter-spacing:4px;
-  margin-bottom:35px;
-}
-
-/* ---------------- ABOUT ---------------- */
-
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:18px;
-}
-
-.about-card{
-  background:#0d0d12;
-  border:1px solid #1f1f25;
-  border-radius:22px;
-  padding:28px;
-}
-
-.about-card-title{
-  font-size:18px;
-  font-weight:700;
-  margin-bottom:10px;
-}
-
-.about-card-text{
-  font-size:14px;
-  color:#8f8f95;
-  line-height:1.7;
+  margin-bottom:25px;
 }
 
 /* ---------------- PORTFOLIO ---------------- */
 
 .video-slider{
   display:flex;
-  gap:22px;
+  gap:16px;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
-  padding-bottom:10px;
+  padding-bottom:8px;
 }
 
 .video-slider::-webkit-scrollbar{
@@ -215,17 +174,17 @@ body{
 }
 
 .video-card{
-  min-width:320px;
+  min-width:78%;
   background:#0d0d12;
   border-radius:24px;
   overflow:hidden;
-  border:1px solid #1b1b20;
+  border:1px solid #1d1d22;
   scroll-snap-align:start;
 }
 
 .video-card video{
   width:100%;
-  height:500px;
+  aspect-ratio:9/16;
   object-fit:cover;
   display:block;
 }
@@ -248,73 +207,100 @@ body{
 /* ---------------- INSTAGRAM ---------------- */
 
 .insta-card{
-  margin-top:40px;
+  margin-top:30px;
   background:#0d0d12;
-  border:1px solid #1f1f25;
+  border:1px solid #1d1d22;
   border-radius:28px;
-  padding:42px 24px;
+  padding:34px 20px;
   text-align:center;
 }
 
 .insta-label{
   font-family:'Bebas Neue';
-  font-size:36px;
+  font-size:32px;
   letter-spacing:4px;
 }
 
 .insta-id{
   margin-top:10px;
-  color:#8d8d95;
-  font-size:15px;
+  color:#8f8f95;
+  font-size:14px;
 }
 
 .insta-btn{
-  width:220px;
-  height:54px;
-  margin:26px auto 0;
+  width:100%;
+  height:56px;
   border-radius:999px;
+  margin-top:24px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   text-decoration:none;
   background:white;
   color:black;
   font-weight:700;
+  font-size:15px;
 }
 
 /* ---------------- CTA ---------------- */
 
 .cta{
+  margin-top:80px;
   text-align:center;
+  padding:0 20px;
 }
 
 .cta-title{
-  font-size:34px;
-  line-height:1.5;
+  font-size:24px;
+  line-height:1.45;
   font-weight:700;
   letter-spacing:-1px;
 }
 
+.cta-buttons{
+  margin-top:30px;
+}
+
 .cta-btn{
-  width:260px;
+  width:100%;
   height:58px;
-  margin:30px auto 0;
   border-radius:999px;
+
   display:flex;
   justify-content:center;
   align-items:center;
-  background:white;
-  color:black;
+
   text-decoration:none;
   font-weight:700;
+  font-size:15px;
+
+  transition:.2s;
+}
+
+.cta-btn-main{
+  background:white;
+  color:black;
+}
+
+.cta-btn-sub{
+  margin-top:12px;
+  background:#111114;
+  border:1px solid #24242a;
+  color:#d0d0d0;
+}
+
+.cta-btn:active{
+  transform:scale(.97);
 }
 
 /* ---------------- FLOATING ---------------- */
 
 .floating-kakao{
   position:fixed;
-  right:20px;
-  bottom:20px;
+  right:18px;
+  bottom:18px;
 
   width:62px;
   height:62px;
@@ -328,7 +314,7 @@ body{
 
   text-decoration:none;
   color:black;
-  font-size:13px;
+  font-size:12px;
   font-weight:800;
 
   opacity:0;
@@ -346,58 +332,10 @@ body{
 /* ---------------- FOOTER ---------------- */
 
 .footer{
-  margin:100px 0 40px;
+  margin:90px 0 35px;
   text-align:center;
+  font-size:11px;
   color:#555;
-  font-size:12px;
-}
-
-/* ---------------- MOBILE ---------------- */
-
-@media (max-width:768px){
-
-  .hero{
-    height:100svh;
-  }
-
-  .logo{
-    font-size:50px;
-    letter-spacing:6px;
-  }
-
-  .hero-title{
-    font-size:22px;
-  }
-
-  .hero-sub{
-    font-size:13px;
-    line-height:1.7;
-  }
-
-  .section{
-    margin:80px auto;
-  }
-
-  .section-title{
-    font-size:34px;
-  }
-
-  .about-grid{
-    grid-template-columns:1fr;
-  }
-
-  .video-card{
-    min-width:85%;
-  }
-
-  .video-card video{
-    height:420px;
-  }
-
-  .cta-title{
-    font-size:26px;
-  }
-
 }
 
 </style>
@@ -419,7 +357,9 @@ body{
     <source src="video.mp4" type="video/mp4">
   </video>
 
-  <div class="logo">YOUR FILM</div>
+  <div class="logo">
+    YOUR FILM
+  </div>
 
   <div class="hero-title">
     YOUR MOVEMENT,<br>
@@ -430,63 +370,8 @@ body{
     Dance Film · Performance Video · Reel Content
   </div>
 
-  <div class="hero-buttons">
-
-    <a href="quote.html" class="btn btn-main">
-      견적 계산하기
-    </a>
-
-    <a href="#portfolio" class="btn btn-sub">
-      포트폴리오 보기
-    </a>
-
-  </div>
-
-</section>
-
-<!-- ABOUT -->
-
-<section class="section">
-
-  <div class="section-title">
-    WHY YOUR FILM
-  </div>
-
-  <div class="about-grid">
-
-    <div class="about-card">
-      <div class="about-card-title">
-        Dance Film
-      </div>
-
-      <div class="about-card-text">
-        움직임이 가장 아름답게 보이는
-        앵글과 무드를 담아냅니다.
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-title">
-        Reel Optimized
-      </div>
-
-      <div class="about-card-text">
-        릴스와 숏폼에 최적화된
-        감각적인 편집과 템포.
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-title">
-        Cinematic Mood
-      </div>
-
-      <div class="about-card-text">
-        단순 기록이 아닌
-        분위기 있는 결과물을 만듭니다.
-      </div>
-    </div>
-
+  <div class="scroll-down">
+    VIEW WORKS ↓
   </div>
 
 </section>
@@ -595,16 +480,31 @@ body{
 
 <!-- CTA -->
 
-<section class="section cta">
+<section class="cta">
 
   <div class="cta-title">
     당신의 움직임을<br>
     가장 영화처럼
   </div>
 
-  <a href="quote.html" class="cta-btn">
-    견적 계산하기
-  </a>
+  <div class="cta-buttons">
+
+    <a href="quote.html"
+       class="cta-btn cta-btn-main">
+
+      견적 계산하기
+
+    </a>
+
+    <a href="https://instagram.com/너아이디"
+       target="_blank"
+       class="cta-btn cta-btn-sub">
+
+      포트폴리오 더 보기
+
+    </a>
+
+  </div>
 
 </section>
 
@@ -613,7 +513,7 @@ body{
 <a href="https://open.kakao.com/o/너링크"
    class="floating-kakao">
 
-  TALK
+  문의
 
 </a>
 
@@ -638,7 +538,7 @@ window.addEventListener("load",()=>{
 
 });
 
-/* 플로팅 */
+/* 플로팅 버튼 */
 
 window.addEventListener("scroll",()=>{
 
