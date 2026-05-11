@@ -2,346 +2,657 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-
-<!-- 🔥 필수 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>YOUR FILM</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-body{
+
+*{
   margin:0;
-  font-family:'Noto Sans KR', sans-serif;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Noto Sans KR',sans-serif;
   background:#050507;
   color:white;
   overflow-x:hidden;
 }
 
-/* 로딩 */
+/* ---------------- LOADER ---------------- */
+
 #loader{
   position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
+  inset:0;
   background:#050507;
   display:flex;
   justify-content:center;
   align-items:center;
   z-index:9999;
-  transition:0.6s;
+  transition:.7s;
 }
-.loader-text{
-  font-family:'Bebas Neue';
-  font-size:48px;
-  letter-spacing:8px;
-  opacity:0;
-  animation:fadeIn 1.2s forwards;
-}
+
 #loader.hide{
   opacity:0;
   pointer-events:none;
 }
 
-/* HERO */
+.loader-text{
+  font-family:'Bebas Neue';
+  font-size:52px;
+  letter-spacing:10px;
+  animation:fade 1.2s forwards;
+  opacity:0;
+}
+
+@keyframes fade{
+  to{
+    opacity:1;
+  }
+}
+
+/* ---------------- HERO ---------------- */
+
 .hero{
+  position:relative;
   height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  position:relative;
   text-align:center;
+  padding:0 24px;
 }
 
-/* 로고 */
-.logo{
-  font-family:'Bebas Neue';
-  font-size:70px;
-  letter-spacing:10px;
-}
-
-/* 배경 영상 */
 .bg-video{
   position:absolute;
-  top:50%; left:50%;
-  width:100vw; height:100vh;
-  transform:translate(-50%,-50%);
+  top:50%;
+  left:50%;
+  width:100vw;
+  height:100vh;
   object-fit:cover;
+  transform:translate(-50%,-50%);
   z-index:-2;
-  opacity:0.5;
+
+  opacity:.72;
+  filter:brightness(1.05);
 }
 
-/* 어둡기 */
 .hero::after{
   content:"";
   position:absolute;
-  width:100%; height:100%;
+  inset:0;
   background:linear-gradient(
-    rgba(0,0,0,0.2),
-    rgba(0,0,0,0.6)
+    rgba(0,0,0,.15),
+    rgba(0,0,0,.65)
   );
   z-index:-1;
 }
 
-/* 버튼 */
+.logo{
+  font-family:'Bebas Neue';
+  font-size:72px;
+  letter-spacing:10px;
+}
+
+.hero-title{
+  margin-top:10px;
+  font-size:28px;
+  line-height:1.35;
+  font-weight:700;
+  letter-spacing:-1px;
+}
+
+.hero-sub{
+  margin-top:14px;
+  font-size:14px;
+  color:#c8c8c8;
+}
+
+/* ---------------- BUTTON ---------------- */
+
+.hero-buttons{
+  width:100%;
+  max-width:280px;
+  margin-top:38px;
+}
+
 .btn{
+  width:100%;
+  height:58px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  font-size:15px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.btn-main{
+  background:white;
+  color:black;
+}
+
+.btn-sub{
+  margin-top:12px;
+  border:1px solid #2a2a2a;
+  color:#d0d0d0;
+  background:rgba(255,255,255,0.02);
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn:active{
+  transform:scale(.97);
+}
+
+/* ---------------- SECTION ---------------- */
+
+.section{
+  max-width:1100px;
+  margin:120px auto;
+  padding:0 20px;
+}
+
+.section-title{
+  font-family:'Bebas Neue';
+  font-size:42px;
+  letter-spacing:4px;
+  margin-bottom:35px;
+}
+
+/* ---------------- ABOUT ---------------- */
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:18px;
+}
+
+.about-card{
+  background:#0d0d12;
+  border:1px solid #1f1f25;
+  border-radius:22px;
+  padding:28px;
+}
+
+.about-card-title{
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.about-card-text{
+  font-size:14px;
+  color:#8f8f95;
+  line-height:1.7;
+}
+
+/* ---------------- PORTFOLIO ---------------- */
+
+.video-slider{
+  display:flex;
+  gap:22px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:10px;
+}
+
+.video-slider::-webkit-scrollbar{
+  display:none;
+}
+
+.video-card{
+  min-width:320px;
+  background:#0d0d12;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid #1b1b20;
+  scroll-snap-align:start;
+}
+
+.video-card video{
+  width:100%;
+  height:500px;
+  object-fit:cover;
+  display:block;
+}
+
+.video-info{
+  padding:18px;
+}
+
+.video-title{
+  font-size:15px;
+  font-weight:700;
+}
+
+.video-sub{
+  margin-top:6px;
+  font-size:13px;
+  color:#7d7d85;
+}
+
+/* ---------------- INSTAGRAM ---------------- */
+
+.insta-card{
+  margin-top:40px;
+  background:#0d0d12;
+  border:1px solid #1f1f25;
+  border-radius:28px;
+  padding:42px 24px;
+  text-align:center;
+}
+
+.insta-label{
+  font-family:'Bebas Neue';
+  font-size:36px;
+  letter-spacing:4px;
+}
+
+.insta-id{
+  margin-top:10px;
+  color:#8d8d95;
+  font-size:15px;
+}
+
+.insta-btn{
+  width:220px;
+  height:54px;
+  margin:26px auto 0;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  background:white;
+  color:black;
+  font-weight:700;
+}
+
+/* ---------------- CTA ---------------- */
+
+.cta{
+  text-align:center;
+}
+
+.cta-title{
+  font-size:34px;
+  line-height:1.5;
+  font-weight:700;
+  letter-spacing:-1px;
+}
+
+.cta-btn{
+  width:260px;
+  height:58px;
+  margin:30px auto 0;
+  border-radius:999px;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:56px;
-  width:100%;
-  max-width:260px;
-  margin-top:15px;
-  border-radius:30px;
-  text-decoration:none;
-  font-weight:bold;
-  transition:0.2s;
-}
-.btn-main{ background:white; color:black; }
-.btn-kakao{ background:#fee500; color:black; }
-.btn-insta{ border:1px solid #333; color:#ccc; }
-
-.btn:hover{ transform:translateY(-3px); }
-.btn:active{ transform:scale(0.94); }
-
-/* 섹션 */
-.section{
-  max-width:420px;
-  margin:100px auto;
-  padding:0 20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-/* 카드 */
-.card{
-  width:100%;
-  border:1px solid #222;
-  padding:20px;
-  margin-top:15px;
-  border-radius:10px;
-  background:#0d0d12;
-}
-
-/* 🔥 영상 슬라이드 */
-.video-slider{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-  padding:10px;
-  scroll-snap-type:x mandatory;
-}
-.video-slider::-webkit-scrollbar{ display:none; }
-
-.video-card{
-  min-width:220px;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid #222;
-  background:#000;
-  scroll-snap-align:start;
-  transition:0.3s;
-}
-.video-card video{
-  width:100%;
-}
-.video-card:hover{
-  transform:scale(1.05);
-}
-
-/* 인스타 카드 */
-.insta-card{
-  width:100%;
-  margin-top:20px;
-  padding:25px;
-  border-radius:20px;
-  border:1px solid #222;
-  text-align:center;
-}
-.insta-btn{
-  display:inline-block;
-  margin-top:15px;
-  padding:12px 18px;
-  border-radius:20px;
   background:white;
   color:black;
   text-decoration:none;
+  font-weight:700;
 }
 
-/* 플로팅 */
+/* ---------------- FLOATING ---------------- */
+
 .floating-kakao{
   position:fixed;
-  bottom:20px; right:20px;
-  padding:14px 18px;
-  border-radius:30px;
+  right:20px;
+  bottom:20px;
+
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
   background:#fee500;
-  color:#000;
-  font-weight:bold;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+  color:black;
+  font-size:13px;
+  font-weight:800;
+
   opacity:0;
   transform:translateY(20px);
-  transition:0.3s;
+  transition:.3s;
+
+  z-index:999;
 }
+
 .floating-kakao.show{
   opacity:1;
   transform:translateY(0);
 }
 
-/* TOP 버튼 */
-.top-btn{
-  position:fixed;
-  bottom:90px; right:20px;
-  width:50px; height:50px;
-  border:none;
-  border-radius:50%;
-  background:#111;
-  color:white;
-  opacity:0;
-  transform:translateY(20px);
-  transition:0.3s;
-}
-.top-btn.show{
-  opacity:1;
-  transform:translateY(0);
-}
+/* ---------------- FOOTER ---------------- */
 
 .footer{
+  margin:100px 0 40px;
   text-align:center;
-  margin:80px 0;
-  font-size:12px;
   color:#555;
+  font-size:12px;
 }
 
-@keyframes fadeIn{
-  to{opacity:1;}
-}
+/* ---------------- MOBILE ---------------- */
 
-/* 🔥🔥🔥 모바일 최적화 핵심 */
-@media (max-width:480px){
+@media (max-width:768px){
+
+  .hero{
+    height:100svh;
+  }
 
   .logo{
-    font-size:42px;
+    font-size:50px;
     letter-spacing:6px;
   }
 
-  .hero p{
-    font-size:12px;
+  .hero-title{
+    font-size:22px;
   }
 
-  .btn{
-    height:50px;
-    font-size:14px;
+  .hero-sub{
+    font-size:13px;
+    line-height:1.7;
   }
 
   .section{
-    margin:60px auto;
+    margin:80px auto;
   }
 
-  .card{
-    padding:16px;
-    font-size:14px;
+  .section-title{
+    font-size:34px;
+  }
+
+  .about-grid{
+    grid-template-columns:1fr;
   }
 
   .video-card{
-    min-width:80%;
+    min-width:85%;
   }
 
-  .insta-card{
-    padding:20px;
+  .video-card video{
+    height:420px;
+  }
+
+  .cta-title{
+    font-size:26px;
   }
 
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- 로딩 -->
+<!-- LOADER -->
+
 <div id="loader">
   <div class="loader-text">YOUR FILM</div>
 </div>
 
 <!-- HERO -->
-<div class="hero">
+
+<section class="hero">
+
   <video autoplay muted loop playsinline class="bg-video">
     <source src="video.mp4" type="video/mp4">
   </video>
 
-  <h1 class="logo">YOUR FILM</h1>
-  <p>MOVE. SHOOT. CREATE.</p>
+  <div class="logo">YOUR FILM</div>
 
-  <a href="quote.html" class="btn btn-main">견적 계산하기</a>
-  <a href="https://open.kakao.com/o/너링크" class="btn btn-kakao">카톡 문의</a>
-  <a href="https://instagram.com/너아이디" class="btn btn-insta">포트폴리오 보기</a>
-</div>
+  <div class="hero-title">
+    YOUR MOVEMENT,<br>
+    YOUR FILM
+  </div>
+
+  <div class="hero-sub">
+    Dance Film · Performance Video · Reel Content
+  </div>
+
+  <div class="hero-buttons">
+
+    <a href="quote.html" class="btn btn-main">
+      견적 계산하기
+    </a>
+
+    <a href="#portfolio" class="btn btn-sub">
+      포트폴리오 보기
+    </a>
+
+  </div>
+
+</section>
 
 <!-- ABOUT -->
-<div class="section">
-  <h2>WHY YOUR FILM</h2>
-  <div class="card">댄스 퍼포먼스 전문 촬영</div>
-  <div class="card">빠른 작업 & 감각적인 연출</div>
-  <div class="card">움직임을 가장 멋있게 기록</div>
-</div>
+
+<section class="section">
+
+  <div class="section-title">
+    WHY YOUR FILM
+  </div>
+
+  <div class="about-grid">
+
+    <div class="about-card">
+      <div class="about-card-title">
+        Dance Film
+      </div>
+
+      <div class="about-card-text">
+        움직임이 가장 아름답게 보이는
+        앵글과 무드를 담아냅니다.
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-title">
+        Reel Optimized
+      </div>
+
+      <div class="about-card-text">
+        릴스와 숏폼에 최적화된
+        감각적인 편집과 템포.
+      </div>
+    </div>
+
+    <div class="about-card">
+      <div class="about-card-title">
+        Cinematic Mood
+      </div>
+
+      <div class="about-card-text">
+        단순 기록이 아닌
+        분위기 있는 결과물을 만듭니다.
+      </div>
+    </div>
+
+  </div>
+
+</section>
 
 <!-- PORTFOLIO -->
-<div class="section">
-  <h2>PORTFOLIO</h2>
+
+<section class="section" id="portfolio">
+
+  <div class="section-title">
+    PORTFOLIO
+  </div>
 
   <div class="video-slider">
+
+    <!-- VIDEO -->
+
     <div class="video-card">
+
       <video autoplay muted loop playsinline>
         <source src="video.mp4" type="video/mp4">
       </video>
+
+      <div class="video-info">
+
+        <div class="video-title">
+          DANCE FILM
+        </div>
+
+        <div class="video-sub">
+          Performance Video
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="video-card">
-      <video controls playsinline>
-        <source src="video.mp4" type="video/mp4">
-      </video>
-    </div>
+    <!-- VIDEO -->
 
     <div class="video-card">
-      <video controls playsinline>
+
+      <video autoplay muted loop playsinline>
         <source src="video.mp4" type="video/mp4">
       </video>
+
+      <div class="video-info">
+
+        <div class="video-title">
+          KPOP CLASS
+        </div>
+
+        <div class="video-sub">
+          Studio Session
+        </div>
+
+      </div>
+
     </div>
+
+    <!-- VIDEO -->
+
+    <div class="video-card">
+
+      <video autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+
+      <div class="video-info">
+
+        <div class="video-title">
+          STREET PERFORMANCE
+        </div>
+
+        <div class="video-sub">
+          Cinematic Reel
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
+
+  <!-- INSTAGRAM -->
 
   <div class="insta-card">
-    <p>더 많은 작업은 인스타그램에서 확인하세요</p>
-    <a href="https://instagram.com/너아이디" target="_blank" class="insta-btn">
-      작업 보러가기 →
+
+    <div class="insta-label">
+      INSTAGRAM
+    </div>
+
+    <div class="insta-id">
+      @yourfilm
+    </div>
+
+    <a href="https://instagram.com/너아이디"
+       target="_blank"
+       class="insta-btn">
+
+      작업 더 보기
+
     </a>
+
   </div>
-</div>
+
+</section>
 
 <!-- CTA -->
-<div class="section">
-  <a href="quote.html" class="btn btn-main">지금 견적 확인하기</a>
+
+<section class="section cta">
+
+  <div class="cta-title">
+    당신의 움직임을<br>
+    가장 영화처럼
+  </div>
+
+  <a href="quote.html" class="cta-btn">
+    견적 계산하기
+  </a>
+
+</section>
+
+<!-- FLOATING -->
+
+<a href="https://open.kakao.com/o/너링크"
+   class="floating-kakao">
+
+  TALK
+
+</a>
+
+<!-- FOOTER -->
+
+<div class="footer">
+  © YOUR FILM
 </div>
 
-<div class="footer">© YOUR FILM</div>
-
-<a href="https://open.kakao.com/o/너링크" class="floating-kakao">카톡</a>
-<button onclick="scrollToTop()" class="top-btn">↑</button>
-
 <script>
-window.addEventListener("load", () => {
+
+/* 로딩 */
+
+window.addEventListener("load",()=>{
+
   setTimeout(()=>{
-    document.getElementById("loader").classList.add("hide");
+
+    document.getElementById("loader")
+      .classList.add("hide");
+
   },1200);
+
 });
 
-window.addEventListener("scroll", () => {
-  const y = window.scrollY;
-  document.querySelector(".floating-kakao").classList.toggle("show", y>200);
-  document.querySelector(".top-btn").classList.toggle("show", y>200);
+/* 플로팅 */
+
+window.addEventListener("scroll",()=>{
+
+  const btn =
+    document.querySelector(".floating-kakao");
+
+  if(window.scrollY > 200){
+    btn.classList.add("show");
+  }else{
+    btn.classList.remove("show");
+  }
+
 });
 
-function scrollToTop(){
-  window.scrollTo({top:0, behavior:"smooth"});
-}
 </script>
 
 </body>
