@@ -1,64 +1,83 @@
-/* ---------------- PORTFOLIO ---------------- */
+<!-- PORTFOLIO -->
 
-.video-slider{
-  display:flex;
-  gap:16px;
+<section class="section" id="portfolio">
 
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
+  <div class="section-title">
+    PORTFOLIO
+  </div>
 
-  padding:0 20px 8px;
+  <p class="swipe-text">
+    SWIPE →
+  </p>
 
-  -webkit-overflow-scrolling:touch;
-}
+  <div class="video-slider">
 
-.video-slider::-webkit-scrollbar{
-  display:none;
-}
+    <!-- VIDEO -->
 
-/* swipe text */
+    <div class="video-card">
 
-.swipe-text{
-  font-size:11px;
-  letter-spacing:2px;
-  color:#777;
-  margin-bottom:14px;
-  padding-left:20px;
-}
+      <video autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
 
-/* video card */
+      <div class="video-info">
 
-.video-card{
-  min-width:76%;
+        <div class="video-title">
+          DANCE FILM
+        </div>
 
-  background:#0d0d12;
+        <div class="video-sub">
+          Performance Video
+        </div>
 
-  border-radius:24px;
-  overflow:hidden;
+      </div>
 
-  border:1px solid #1d1d22;
+    </div>
 
-  scroll-snap-align:start;
-}
+    <!-- VIDEO -->
 
-.video-card video{
-  width:100%;
-  aspect-ratio:9/16;
-  object-fit:cover;
-  display:block;
-}
+    <div class="video-card">
 
-.video-info{
-  padding:18px;
-}
+      <video autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
 
-.video-title{
-  font-size:15px;
-  font-weight:700;
-}
+      <div class="video-info">
 
-.video-sub{
-  margin-top:6px;
-  font-size:13px;
-  color:#7d7d85;
-}
+        <div class="video-title">
+          KPOP CLASS
+        </div>
+
+        <div class="video-sub">
+          Studio Session
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- VIDEO -->
+
+    <div class="video-card">
+
+      <video autoplay muted loop playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+
+      <div class="video-info">
+
+        <div class="video-title">
+          STREET PERFORMANCE
+        </div>
+
+        <div class="video-sub">
+          Cinematic Reel
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
