@@ -171,12 +171,12 @@ body{
 
 .video-slider{
   display:flex;
-  gap:16px;
+  gap:14px;
 
   overflow-x:auto;
   scroll-snap-type:x mandatory;
 
-  padding:0 20px 8px;
+  padding:0 20px 10px;
 
   -webkit-overflow-scrolling:touch;
 }
@@ -186,38 +186,47 @@ body{
 }
 
 .video-card{
-  min-width:76%;
+  min-width:58%;
 
   background:#0d0d12;
 
-  border-radius:24px;
+  border-radius:22px;
   overflow:hidden;
 
   border:1px solid #1d1d22;
 
   scroll-snap-align:start;
+
+  flex-shrink:0;
 }
 
 .video-card video{
   width:100%;
   aspect-ratio:9/16;
+
   object-fit:cover;
   display:block;
+
+  background:black;
 }
 
 .video-info{
-  padding:18px;
+  padding:14px;
 }
 
 .video-title{
-  font-size:15px;
+  font-size:14px;
   font-weight:700;
+  letter-spacing:-0.3px;
 }
 
 .video-sub{
-  margin-top:6px;
-  font-size:13px;
+  margin-top:5px;
+
+  font-size:12px;
   color:#7d7d85;
+
+  line-height:1.4;
 }
 
 /* ---------------- INSTAGRAM ---------------- */
@@ -422,7 +431,7 @@ body{
 
   <div class="video-slider">
 
-    <!-- VIDEO -->
+    <!-- PERFORMANCE -->
 
     <div class="video-card">
 
@@ -437,14 +446,14 @@ body{
         </div>
 
         <div class="video-sub">
-          Cinematic Dance Visual
+          Cinematic Performance
         </div>
 
       </div>
 
     </div>
 
-    <!-- VIDEO -->
+    <!-- KPOP -->
 
     <div class="video-card">
 
@@ -466,7 +475,7 @@ body{
 
     </div>
 
-    <!-- VIDEO -->
+    <!-- DANCE FILM -->
 
     <div class="video-card">
 
@@ -499,10 +508,10 @@ body{
     </div>
 
     <div class="insta-id">
-      @yourfilm
+      @your__film
     </div>
 
-    <a href="https://instagram.com/your_film"
+    <a href="https://instagram.com/your__film"
        target="_blank"
        class="insta-btn">
 
@@ -532,7 +541,7 @@ body{
 
     </a>
 
-    <a href="https://instagram.com/your_film"
+    <a href="https://instagram.com/your__film"
        target="_blank"
        class="cta-btn cta-btn-sub">
 
